@@ -1,0 +1,2164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chanuka Sanesh | Portfolio v2.0</title>
+    <link rel="icon" href="img/profile.png" type="image/png">
+    <meta name="description" content="Portfolio of Chanuka Sanesh Jayasooriya - Electronic & Telecommunication Engineering Undergraduate">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+    /* ══════════════════════════════════════════
+       RESET & BASE
+    ══════════════════════════════════════════ */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+        --bg:        #f5f2ed;
+        --bg2:       #eeebe4;
+        --ink:       #1a1a1a;
+        --ink2:      #444;
+        --ink3:      #888;
+        --accent:    #c8a95a;
+        --accent2:   #1a3a6b;
+        --white:     #fff;
+        --glass:     rgba(255,255,255,0.55);
+        --glass-b:   rgba(255,255,255,0.70);
+        --radius:    16px;
+        --ff-serif:  'Cormorant Garamond', Georgia, serif;
+        --ff-sans:   'DM Sans', system-ui, sans-serif;
+        --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--ff-sans); background: var(--bg); color: var(--ink); overflow-x: hidden; }
+    img  { display:block; max-width:100%; }
+    a    { text-decoration: none; color: inherit; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
+    /* ══════════════════════════════════════════
+       NOISE OVERLAY
+    ══════════════════════════════════════════ */
+    .noise-overlay {
+        position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+        opacity: 0.4;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    }
+
+    /* ══════════════════════════════════════════
+       HEADER / NAV
+    ══════════════════════════════════════════ */
+    .header {
+        position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 22px 44px;
+        transition: transform 0.38s cubic-bezier(0.4,0,0.2,1),
+                    padding 0.38s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* Scrolled-down: shrink padding */
+    .header.scrolled { padding: 14px 44px; }
+
+    /* Hidden: slide up off screen */
+    .header.hide { transform: translateY(-110%); }
+
+    .nav-pill {
+        background: var(--glass);
+        backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+        border: 1px solid var(--glass-b); border-radius: 50px;
+        display: flex; align-items: center;
+        transition: padding 0.38s ease, gap 0.38s ease;
+    }
+
+    .navbara .nav-pill { padding: 11px 22px 11px 12px; gap: 12px; }
+    .header.scrolled .navbara .nav-pill { padding: 8px 18px 8px 10px; }
+
+    .logo-icon {
+        width: 34px; height: 34px; border-radius: 50%;
+        background: var(--ink);
+        display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        transition: width 0.38s ease, height 0.38s ease;
+    }
+    .header.scrolled .logo-icon { width: 28px; height: 28px; }
+    .logo-icon i { color: #fff; font-size: 0.78rem; }
+
+    .navbara .logo {
+        font-family: var(--ff-sans); font-size: 0.95rem; font-weight: 500;
+        color: var(--ink); letter-spacing: -0.01em;
+        transition: font-size 0.38s ease;
+    }
+    .header.scrolled .navbara .logo { font-size: 0.85rem; }
+    .navbara .logo span { color: var(--ink3); }
+
+    .navbar .nav-pill { padding: 11px 32px; gap: 30px; }
+    .header.scrolled .navbar .nav-pill { padding: 8px 24px; gap: 24px; }
+    .navbar a {
+        font-size: 0.88rem; font-weight: 400; color: var(--ink2);
+        transition: color var(--transition), font-size 0.38s ease; position: relative;
+    }
+    .header.scrolled .navbar a { font-size: 0.82rem; }
+    .navbar a::after {
+        content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+        height: 1px; background: var(--ink);
+        transform: scaleX(0); transform-origin: left; transition: transform var(--transition);
+    }
+    .navbar a:hover::after, .navbar a.active::after { transform: scaleX(1); }
+    .navbar a:hover, .navbar a.active { color: var(--ink); font-weight: 500; }
+    .nav-indicator { display: none; }
+    .menu-icon { display: none; }
+
+    /* Ensure all sections sit above circuit canvas */
+    section, footer { position: relative; z-index: 1; }
+
+    /* ══════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════ */
+    .hero {
+        position: relative; width: 100%; height: 100vh; min-height: 600px;
+        overflow: hidden; display: flex; align-items: flex-end; justify-content: flex-end;
+    }
+    /* ── CSS Morphing Blob Background ── */
+    .hero-bg {
+        position: absolute; inset: 0; z-index: 0;
+        background: #ece9e3;
+        overflow: hidden;
+    }
+
+    .hero-blob {
+        position: absolute;
+        top: 50%; left: -5%;
+        width: 75%; height: 130%;
+        transform: translateY(-50%);
+        background: radial-gradient(ellipse at 40% 50%,
+            #7a7870 0%,
+            #8d8b84 18%,
+            #9e9c95 32%,
+            #b5b3ac 48%,
+            #cccbc5 62%,
+            #deddd8 76%,
+            rgba(236,233,227,0) 90%
+        );
+        border-radius: 44% 56% 60% 40% / 52% 48% 58% 42%;
+        animation: blobMorph 14s ease-in-out infinite;
+        will-change: border-radius, transform;
+    }
+
+    .hero-blob-2 {
+        position: absolute;
+        top: -20%; left: -12%;
+        width: 65%; height: 95%;
+        background: radial-gradient(ellipse at 50% 55%,
+            #696860 0%,
+            #808078 22%,
+            #9a9890 42%,
+            rgba(180,178,171,0.4) 65%,
+            rgba(236,233,227,0) 85%
+        );
+        border-radius: 58% 42% 38% 62% / 46% 62% 38% 54%;
+        animation: blobMorph2 18s ease-in-out infinite;
+        opacity: 0.7;
+        will-change: border-radius, transform;
+    }
+
+    .hero-blob-3 {
+        position: absolute;
+        bottom: -15%; left: 5%;
+        width: 50%; height: 70%;
+        background: radial-gradient(ellipse at 45% 40%,
+            #878580 0%,
+            #a5a49e 28%,
+            rgba(196,194,188,0.35) 58%,
+            rgba(236,233,227,0) 80%
+        );
+        border-radius: 38% 62% 52% 48% / 60% 40% 62% 38%;
+        animation: blobMorph3 22s ease-in-out infinite;
+        opacity: 0.55;
+        will-change: border-radius;
+    }
+
+    .hero-grain {
+        position: absolute; inset: 0; z-index: 1; pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='0.055'/%3E%3C/svg%3E");
+        mix-blend-mode: overlay;
+    }
+
+    .hero-fade {
+        position: absolute; inset: 0; z-index: 2; pointer-events: none;
+        background: linear-gradient(
+            to right,
+            rgba(236,233,227,0)    0%,
+            rgba(236,233,227,0)   52%,
+            rgba(236,233,227,0.5) 70%,
+            rgba(236,233,227,0.88) 84%,
+            #ece9e3              100%
+        );
+    }
+
+    @keyframes blobMorph {
+        0%   { border-radius: 44% 56% 60% 40% / 52% 48% 58% 42%; transform: translateY(-50%) scale(1)    rotate(0deg);   }
+        20%  { border-radius: 54% 46% 42% 58% / 60% 40% 62% 38%; transform: translateY(-52%) scale(1.03) rotate(2deg);   }
+        40%  { border-radius: 38% 62% 56% 44% / 44% 56% 40% 60%; transform: translateY(-48%) scale(0.98) rotate(-1deg);  }
+        60%  { border-radius: 62% 38% 48% 52% / 56% 44% 58% 42%; transform: translateY(-51%) scale(1.02) rotate(1.5deg); }
+        80%  { border-radius: 48% 52% 64% 36% / 48% 60% 36% 64%; transform: translateY(-49%) scale(0.99) rotate(-2deg);  }
+        100% { border-radius: 44% 56% 60% 40% / 52% 48% 58% 42%; transform: translateY(-50%) scale(1)    rotate(0deg);   }
+    }
+
+    @keyframes blobMorph2 {
+        0%   { border-radius: 58% 42% 38% 62% / 46% 62% 38% 54%; transform: translateY(0)   rotate(0deg);   }
+        25%  { border-radius: 42% 58% 64% 36% / 60% 40% 56% 44%; transform: translateY(3%)  rotate(-3deg);  }
+        50%  { border-radius: 66% 34% 44% 56% / 38% 66% 44% 56%; transform: translateY(-2%) rotate(2deg);   }
+        75%  { border-radius: 36% 64% 58% 42% / 54% 46% 62% 38%; transform: translateY(4%)  rotate(-1.5deg);}
+        100% { border-radius: 58% 42% 38% 62% / 46% 62% 38% 54%; transform: translateY(0)   rotate(0deg);   }
+    }
+
+    @keyframes blobMorph3 {
+        0%   { border-radius: 38% 62% 52% 48% / 60% 40% 62% 38%; transform: rotate(0deg);  }
+        33%  { border-radius: 60% 40% 36% 64% / 44% 60% 40% 56%; transform: rotate(3deg);  }
+        66%  { border-radius: 44% 56% 66% 34% / 56% 44% 58% 42%; transform: rotate(-2deg); }
+        100% { border-radius: 38% 62% 52% 48% / 60% 40% 62% 38%; transform: rotate(0deg);  }
+    }
+
+    .hero-content {
+        position: relative; z-index: 2;
+        display: flex; flex-direction: column; align-items: flex-end; text-align: right;
+        padding: 0 60px 130px 0; max-width: 56%;
+        animation: fadeSlideIn 1.2s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0;
+    }
+    @keyframes fadeSlideIn {
+        from { opacity:0; transform: translateY(28px); }
+        to   { opacity:1; transform: translateY(0); }
+    }
+
+    .hero-content h1 {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(3.4rem, 7vw, 6.4rem);
+        font-weight: 700; line-height: 1.0; letter-spacing: -0.04em; margin-bottom: 10px;
+        color: #1a1a1a;
+        animation: nameColorShift 14s ease-in-out infinite;
+        will-change: color;
+    }
+
+    @keyframes nameColorShift {
+        0%   { color: #1a1a1a; }
+        15%  { color: #0a0a0a; }
+        30%  { color: #2e2c28; }
+        45%  { color: #080808; }
+        60%  { color: #1f1e1a; }
+        75%  { color: #0d0d0d; }
+        90%  { color: #262420; }
+        100% { color: #1a1a1a; }
+    }
+    .hero-content h1 span { color: var(--ink); }
+    .hero-content h3, .hero-content > p,
+    .hero-content .social-media, .hero-content .btn, .multiple-text { display: none; }
+
+    .hero-subtitle {
+        font-family: var(--ff-sans); font-size: 0.9rem; font-weight: 400;
+        letter-spacing: 0.01em; margin-bottom: 18px;
+        color: #555;
+        animation: subtitleColorShift 14s ease-in-out infinite;
+    }
+
+    @keyframes subtitleColorShift {
+        0%   { color: #555; }
+        20%  { color: #3a3a3a; }
+        45%  { color: #606060; }
+        70%  { color: #404040; }
+        100% { color: #555; }
+    }
+
+    .hero-badges { display: flex; flex-direction: column; align-items: flex-end; gap: 9px; }
+    .hero-badge {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-family: var(--ff-sans); font-size: 0.82rem;
+        color: #444;
+        white-space: nowrap;
+        animation: subtitleColorShift 14s ease-in-out infinite;
+    }
+    .badge-logo {
+        width: 35px; height: 35px; background: transparent;
+        display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .badge-logo i { color: var(--ink); font-size:0.65rem; }
+    .badge-logo img {
+        width: 100%; height: 100%;
+        object-fit: contain;
+        mix-blend-mode: multiply;
+        filter: contrast(1.05);
+    }
+    .badge-accent { color: var(--accent); font-weight: 600; }
+
+    .hero-action-bar {
+        position: absolute; bottom: 34px; left: 50%;
+        transform: translateX(-50%); z-index: 10;
+        display: flex; align-items: center; gap: 10px;
+        animation: fadeUp 1.3s 0.45s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0;
+    }
+    @keyframes fadeUp {
+        from { opacity:0; transform: translateX(-50%) translateY(16px); }
+        to   { opacity:1; transform: translateX(-50%) translateY(0); }
+    }
+
+    .action-btn {
+        font-family: var(--ff-sans); font-size: 0.95rem; font-weight: 500; color: var(--ink);
+        padding: 13px 28px; border: 1.5px solid rgba(0,0,0,0.2); border-radius: 50px;
+        background: var(--glass); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+        cursor: pointer; white-space: nowrap;
+        transition: background var(--transition), color var(--transition), border-color var(--transition);
+    }
+    .action-btn:hover { background: rgba(0,0,0,0.88); color: #fff; border-color: transparent; }
+
+    .action-divider { width:1px; height:34px; background: rgba(0,0,0,0.15); }
+    .action-socials { display:flex; align-items:center; gap:10px; }
+
+    .action-social-btn {
+        width: 46px; height: 46px; border-radius: 50%;
+        border: 1.5px solid rgba(0,0,0,0.2); background: var(--glass);
+        backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+        display: flex; align-items: center; justify-content: center;
+        color: #333; font-size: 1.05rem;
+        transition: background var(--transition), color var(--transition), border-color var(--transition);
+    }
+    .action-social-btn:hover { background: rgba(0,0,0,0.88); color:#fff; border-color:transparent; }
+
+    /* ══════════════════════════════════════════
+       SECTION SHARED
+    ══════════════════════════════════════════ */
+    section { padding: 90px 8vw; }
+
+    .heading {
+        font-family: var(--ff-serif);
+        font-size: clamp(2.2rem, 4vw, 3.2rem);
+        font-weight: 300; color: var(--ink); margin-bottom: 52px; letter-spacing: -0.015em;
+    }
+    .heading span { color: var(--accent); }
+
+    .btn {
+        display: inline-block; padding: 11px 28px;
+        border: 1.5px solid var(--ink); border-radius: 50px;
+        font-family: var(--ff-sans); font-size: 0.85rem; font-weight: 500; color: var(--ink);
+        transition: background var(--transition), color var(--transition); cursor: pointer;
+    }
+    .btn:hover { background: var(--ink); color: #fff; }
+
+    /* ══════════════════════════════════════════
+       ABOUT
+    ══════════════════════════════════════════ */
+    .about {
+        display: grid; grid-template-columns: 260px 1fr;
+        gap: 64px; align-items: start; background: var(--bg);
+    }
+
+    /* Header above cards + text */
+    .about-header { text-align: center; margin-bottom: 6px; }
+    .about-header .about-sub {
+        font-family: var(--ff-sans); font-size: 0.78rem; font-weight: 400;
+        color: var(--ink3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px;
+    }
+    .about-header .heading { margin-bottom: 32px; font-weight: 700; }
+
+    /* Profile image */
+    .about-img { position: relative; margin-top: 72px; }
+    .about-img img {
+        width: 100%; border-radius: var(--radius); aspect-ratio: 4/5; object-fit: cover;
+        filter: grayscale(18%); box-shadow: 0 24px 60px rgba(0,0,0,0.12);
+    }
+    .about-img::after {
+        content: ''; position: absolute; bottom: -8px; right: -8px;
+        width: 100%; height: 100%;
+        border: 1.5px solid rgba(0,0,0,0.10);
+        border-radius: calc(var(--radius) + 2px); z-index: -1;
+    }
+
+    /* About right column */
+    .about-content { display: flex; flex-direction: column; gap: 0; }
+
+    /* Info cards row */
+    .about-cards {
+        display: grid; grid-template-columns: 1fr 1fr;
+        gap: 18px; margin-bottom: 28px;
+    }
+
+    /* Each info card */
+    .about-card {
+        position: relative; overflow: hidden;
+        background: var(--white);
+        border: 1px solid rgba(0,0,0,0.08);
+        border-radius: 18px;
+        padding: 24px 22px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .about-card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.09); }
+
+    /* Circuit texture SVG inside card */
+    .about-card-circuit {
+        position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+        opacity: 0.055;
+    }
+    .about-card-circuit svg { width: 100%; height: 100%; }
+
+    /* Faded logo background */
+    .about-card-logo {
+        position: absolute; right: -10px; bottom: -10px; z-index: 0;
+        width: 110px; height: 110px; pointer-events: none;
+    }
+    .about-card-logo img {
+        width: 100%; height: 100%; object-fit: contain;
+        mix-blend-mode: multiply; opacity: 0.1;
+    }
+
+    /* Corner dots (PCB-style) */
+    .about-card::before {
+        content: '';
+        position: absolute; inset: 10px;
+        border: 1px dashed rgba(0,0,0,0.07);
+        border-radius: 12px; z-index: 0; pointer-events: none;
+    }
+
+    /* Corner pads */
+    .about-card-pad {
+        position: absolute; width: 6px; height: 6px;
+        border-radius: 50%;
+        background: rgba(0,0,0,0.12);
+        z-index: 1;
+    }
+    .about-card-pad.tl { top: 10px; left: 10px; }
+    .about-card-pad.tr { top: 10px; right: 10px; }
+    .about-card-pad.bl { bottom: 10px; left: 10px; }
+    .about-card-pad.br { bottom: 10px; right: 10px; }
+
+    /* Card content */
+    .about-card-inner { position: relative; z-index: 1; }
+    .about-card-label {
+        font-family: var(--ff-sans); font-size: 0.65rem; font-weight: 700;
+        letter-spacing: 0.14em; text-transform: uppercase;
+        color: var(--ink3); margin-bottom: 14px;
+        display: flex; align-items: center; gap: 8px;
+    }
+    .about-card-label::after {
+        content: ''; flex: 1; height: 1px; background: rgba(0,0,0,0.1);
+    }
+    .about-card-title {
+        font-family: var(--ff-serif); font-size: 1.25rem; font-weight: 600;
+        color: var(--ink); margin-bottom: 8px; line-height: 1.25;
+    }
+    .about-card-sub {
+        font-family: var(--ff-sans); font-size: 0.78rem;
+        color: var(--ink3); line-height: 1.65; margin-bottom: 6px;
+    }
+    .about-card-sub strong { color: var(--ink2); font-weight: 500; }
+
+    /* About body text */
+    .about-content p {
+        font-size: 0.94rem; line-height: 1.85; color: var(--ink2); margin-bottom: 28px;
+    }
+    .about-content .about-sub-heading {
+        display: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+        .about { grid-template-columns: 1fr; gap: 40px; }
+        .about-img { max-width: 240px; margin: 0 auto; }
+    }
+    @media (max-width: 540px) {
+        .about-cards { grid-template-columns: 1fr; }
+    }
+
+    /* ══════════════════════════════════════════
+       SKILLS
+    ══════════════════════════════════════════ */
+    .skills { background: var(--bg2); text-align: center; }
+    .skills .heading { text-align: center; }
+    .bento-grid { text-align: left; }
+    .bento-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px;
+    }
+    .bento-card {
+        background: var(--white); border: 1px solid rgba(0,0,0,0.07);
+        border-radius: var(--radius); padding: 32px 28px 26px;
+        transition: transform var(--transition), box-shadow var(--transition);
+        display: flex; flex-direction: column;
+    }
+    .bento-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.09); }
+    .bento-card > i { font-size: 1.55rem; color: var(--accent); margin-bottom: 14px; display: block; }
+    .bento-card h3 {
+        font-family: var(--ff-serif); font-size: 1.35rem;
+        font-weight: 600; margin-bottom: 8px; color: var(--ink);
+    }
+    .bento-card p { font-size: 0.86rem; line-height: 1.72; color: var(--ink2); margin-bottom: 20px; flex: 1; }
+
+    /* Tech stack logos row */
+    .skill-logos {
+        display: flex; flex-wrap: wrap; align-items: center;
+        gap: 8px; padding-top: 16px;
+        border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    .skill-logo {
+        display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    .skill-logo img {
+        width: 28px; height: 28px; object-fit: contain;
+        filter: grayscale(20%);
+        transition: filter var(--transition), transform var(--transition);
+    }
+    .skill-logo:hover img { filter: grayscale(0%); transform: scale(1.15); }
+    .skill-logo span {
+        font-family: var(--ff-sans); font-size: 0.58rem;
+        color: var(--ink3); font-weight: 500; text-align: center;
+        white-space: nowrap;
+    }
+
+    /* ══════════════════════════════════════════
+       PROJECTS — CARD CAROUSEL
+    ══════════════════════════════════════════ */
+    .projects { background: var(--bg); overflow: hidden; }
+
+    .projects-header { text-align: center; margin-bottom: 0; }
+    .projects-header .proj-sub {
+        font-family: var(--ff-sans); font-size: 0.78rem; font-weight: 400;
+        color: var(--ink3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px;
+    }
+
+    .carousel-wrapper { position: relative; padding: 0 28px; }
+
+    .carousel-arrow {
+        position: absolute; top: 38%; transform: translateY(-50%);
+        z-index: 10; width: 42px; height: 42px; border-radius: 50%;
+        background: var(--white); border: 1.5px solid rgba(0,0,0,0.12);
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; color: var(--ink); font-size: 0.88rem;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        transition: background var(--transition), box-shadow var(--transition);
+    }
+    .carousel-arrow:hover { background: var(--ink); color: #fff; box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+    .carousel-arrow.prev { left: -6px; }
+    .carousel-arrow.next { right: -6px; }
+    .carousel-arrow.disabled { opacity: 0.28; pointer-events: none; }
+
+    .carousel-track-outer { overflow: hidden; }
+    .carousel-track {
+        display: flex; gap: 20px;
+        transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+        will-change: transform;
+    }
+
+    .proj-card {
+        flex: 0 0 calc(25% - 15px);
+        min-width: 0;
+        background: var(--white);
+        border: 1px solid rgba(0,0,0,0.07);
+        border-radius: 18px; overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        transition: transform var(--transition), box-shadow var(--transition);
+        cursor: pointer;
+    }
+    .proj-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,0.13); }
+
+    .proj-card-img {
+        position: relative; width: 100%; aspect-ratio: 4/3;
+        overflow: hidden; background: var(--bg2);
+    }
+    .proj-card-img img { width:100%; height:100%; object-fit:cover; transition: transform 0.55s ease; }
+    .proj-card:hover .proj-card-img img { transform: scale(1.06); }
+
+    .proj-tag {
+        position: absolute; top: 12px; left: 12px;
+        padding: 4px 11px; border-radius: 20px;
+        font-family: var(--ff-sans); font-size: 0.65rem; font-weight: 600;
+        letter-spacing: 0.04em; color: #fff; z-index: 2;
+    }
+    .proj-tag.pcb      { background: #2563eb; }
+    .proj-tag.robotics { background: #16a34a; }
+    .proj-tag.iot      { background: #9333ea; }
+    .proj-tag.firmware { background: #ea580c; }
+
+    .proj-card-body { padding: 16px 18px 18px; border-top: 1px solid rgba(0,0,0,0.05); }
+    .proj-card-body h4 {
+        font-family: var(--ff-sans); font-size: 0.92rem; font-weight: 600;
+        color: var(--ink); margin-bottom: 6px; line-height: 1.3;
+    }
+    .proj-card-body p { font-size: 0.78rem; line-height: 1.65; color: var(--ink3); margin-bottom: 12px; }
+    .proj-card-actions {
+        display: flex; align-items: center; gap: 8px;
+        padding-top: 10px; border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    .proj-action-btn {
+        width: 30px; height: 30px; border-radius: 50%;
+        border: 1.5px solid rgba(0,0,0,0.14);
+        display: flex; align-items: center; justify-content: center;
+        color: var(--ink2); font-size: 0.75rem;
+        transition: background var(--transition), color var(--transition), border-color var(--transition);
+    }
+    .proj-action-btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+    .carousel-dots {
+        display: flex; align-items: center; justify-content: center;
+        gap: 7px; margin-top: 26px;
+    }
+    .carousel-dot {
+        height: 8px; width: 8px; border-radius: 4px;
+        background: rgba(0,0,0,0.15); cursor: pointer;
+        transition: background var(--transition), width var(--transition);
+    }
+    .carousel-dot.active { background: var(--ink); width: 22px; }
+
+    @media (max-width: 900px) {
+        .proj-card { flex: 0 0 calc(50% - 10px); }
+        .carousel-arrow { display: none; }
+        .carousel-wrapper { padding: 0; }
+    }
+    @media (max-width: 540px) {
+        .proj-card { flex: 0 0 82vw; }
+    }
+
+    /* ══════════════════════════════════════════
+       ACHIEVEMENTS
+    ══════════════════════════════════════════ */
+    .achievements { background: var(--bg2); text-align: center; }
+    .achievements .heading { text-align: center; }
+    .achievement-container {
+        display: flex; flex-direction: column; gap: 28px; text-align: left; max-width: 860px; margin: 0 auto;
+    }
+
+    /* ── Achievement Card ── */
+    .ach-card {
+        background: var(--white);
+        border: 1px solid rgba(0,0,0,0.07);
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow: 0 6px 28px rgba(0,0,0,0.06);
+        display: grid;
+        grid-template-columns: 340px 1fr;
+        align-items: stretch;
+        transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .ach-card:hover { transform: translateY(-4px); box-shadow: 0 18px 50px rgba(0,0,0,0.11); }
+
+    /* Image side */
+    .ach-img {
+        position: relative; overflow: hidden;
+    }
+    .ach-img img {
+        width: 100%; height: 100%; object-fit: cover; display: block;
+        transition: transform 0.55s ease;
+        min-height: 260px;
+    }
+    .ach-card:hover .ach-img img { transform: scale(1.04); }
+
+    /* Content side */
+    .ach-body {
+        padding: 32px 36px;
+        display: flex; flex-direction: column; justify-content: center; gap: 0;
+    }
+
+    /* Badge row: placement + date */
+    .ach-meta {
+        display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+        flex-wrap: wrap;
+    }
+    .ach-badge {
+        display: inline-flex; align-items: center; gap: 6px;
+        padding: 5px 12px; border-radius: 20px;
+        font-family: var(--ff-sans); font-size: 0.72rem; font-weight: 700;
+        letter-spacing: 0.04em; color: var(--ink);
+        border: 1.5px solid rgba(0,0,0,0.15); background: var(--bg2);
+    }
+    .ach-badge i { font-size: 0.85rem; }
+    .ach-badge.gold  { border-color: #c8a95a; color: #8a6d1a; background: #fdf6e3; }
+    .ach-badge.silver{ border-color: #9b9b9b; color: #555;    background: #f5f5f5; }
+    .ach-badge.finalist { border-color: #6366f1; color: #4338ca; background: #eef2ff; }
+    .ach-date {
+        font-family: var(--ff-sans); font-size: 0.76rem;
+        color: var(--ink3); font-weight: 400;
+    }
+
+    /* Title */
+    .ach-title {
+        font-family: var(--ff-sans); font-size: 1.05rem; font-weight: 700;
+        color: var(--ink); margin-bottom: 10px; line-height: 1.35;
+    }
+
+    /* Description */
+    .ach-desc {
+        font-family: var(--ff-sans); font-size: 0.84rem;
+        line-height: 1.78; color: var(--ink2); margin-bottom: 22px;
+        text-align: justify;
+    }
+
+    /* CTA button */
+    .ach-btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 10px 22px; border-radius: 10px;
+        border: 1.5px solid rgba(0,0,0,0.14);
+        background: transparent;
+        font-family: var(--ff-sans); font-size: 0.8rem; font-weight: 600;
+        color: var(--ink); text-decoration: none;
+        width: fit-content;
+        transition: background var(--transition), color var(--transition), border-color var(--transition);
+    }
+    .ach-btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .ach-btn i { font-size: 0.85rem; }
+
+    @media (max-width: 760px) {
+        .ach-card { grid-template-columns: 1fr; }
+        .ach-img img { min-height: 200px; height: 200px; }
+        .ach-body { padding: 24px; }
+    }
+
+    /* ══════════════════════════════════════════
+       CONTACT
+    ══════════════════════════════════════════ */
+    .contact { background: var(--bg); text-align: center; }
+    .contact .heading { text-align: center; margin-bottom: 8px; }
+    .contact-sub {
+        font-family: var(--ff-sans); font-size: 0.78rem; font-weight: 400;
+        color: var(--ink3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px;
+    }
+
+    /* Two-column layout */
+    .contact-layout {
+        display: grid; grid-template-columns: 1fr 1fr;
+        gap: 24px; margin-top: 40px; text-align: left;
+    }
+
+    /* Panel shared style */
+    .contact-panel {
+        position: relative; overflow: hidden;
+        background: var(--white);
+        border: 1px solid rgba(0,0,0,0.07);
+        border-radius: 22px;
+        padding: 32px 28px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+
+    /* Circuit texture inside panels */
+    .contact-circuit {
+        position: absolute; inset: 0; z-index: 0;
+        pointer-events: none; overflow: hidden; opacity: 0.045;
+    }
+    .contact-circuit svg { width: 100%; height: 100%; }
+
+    .contact-panel-inner { position: relative; z-index: 1; }
+
+    /* Corner pads */
+    .contact-panel::before {
+        content: ''; position: absolute; inset: 10px;
+        border: 1px dashed rgba(0,0,0,0.06);
+        border-radius: 16px; z-index: 0; pointer-events: none;
+    }
+    .cppad {
+        position: absolute; width: 5px; height: 5px;
+        border-radius: 50%; background: rgba(0,0,0,0.10); z-index: 1;
+    }
+    .cppad.tl { top:10px; left:10px; }
+    .cppad.tr { top:10px; right:10px; }
+    .cppad.bl { bottom:10px; left:10px; }
+    .cppad.br { bottom:10px; right:10px; }
+
+    /* Contact info rows */
+    .contact-row {
+        display: flex; align-items: center; gap: 16px;
+        padding: 16px 18px;
+        background: var(--bg);
+        border-radius: 14px;
+        margin-bottom: 12px;
+        transition: transform var(--transition), box-shadow var(--transition);
+        text-decoration: none;
+    }
+    .contact-row:last-child { margin-bottom: 0; }
+    .contact-row:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+
+    .contact-icon {
+        width: 42px; height: 42px; border-radius: 50%;
+        background: var(--ink);
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0; color: #fff; font-size: 0.9rem;
+    }
+    .contact-row-text { display: flex; flex-direction: column; gap: 2px; }
+    .contact-row-label {
+        font-family: var(--ff-sans); font-size: 0.65rem; font-weight: 700;
+        letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink3);
+    }
+    .contact-row-value {
+        font-family: var(--ff-sans); font-size: 0.88rem;
+        font-weight: 500; color: var(--ink);
+    }
+
+    /* Map panel right side */
+    .contact-location-tag {
+        display: flex; align-items: center; gap: 14px;
+        padding: 14px 18px;
+        background: var(--bg); border-radius: 14px;
+        margin-bottom: 18px;
+    }
+    .contact-location-tag .contact-icon { background: var(--ink); }
+    .contact-map {
+        width: 100%; border-radius: 14px; overflow: hidden;
+        aspect-ratio: 16/10; border: 1px solid rgba(0,0,0,0.08);
+    }
+    .contact-map iframe {
+        width: 100%; height: 100%; border: none; display: block;
+        filter: grayscale(100%) contrast(1.1);
+    }
+
+    /* Form section below */
+    .contact-form-wrap {
+        margin-top: 24px; text-align: left;
+    }
+    .input-box { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .contact-form-wrap input[type="text"],
+    .contact-form-wrap input[type="email"],
+    .contact-form-wrap input[type="number"],
+    .contact-form-wrap textarea {
+        width: 100%; padding: 13px 16px;
+        background: var(--white); border: 1.5px solid rgba(0,0,0,0.11); border-radius: 10px;
+        font-family: var(--ff-sans); font-size: 0.86rem; color: var(--ink);
+        outline: none; transition: border-color var(--transition);
+    }
+    .contact-form-wrap input:focus, .contact-form-wrap textarea:focus { border-color: var(--ink); }
+    .contact-form-wrap input::placeholder, .contact-form-wrap textarea::placeholder { color: var(--ink3); }
+    .contact-form-wrap textarea { resize: vertical; min-height: 130px; margin-bottom: 14px; }
+    .contact-form-wrap input[type="submit"] {
+        cursor: pointer; background: var(--ink); color: #fff; border: none;
+        padding: 13px 32px; border-radius: 50px;
+        font-family: var(--ff-sans); font-size: 0.86rem; font-weight: 500;
+        transition: background var(--transition), transform var(--transition);
+    }
+    .contact-form-wrap input[type="submit"]:hover { background: #333; transform: translateY(-2px); }
+    .contact-form-wrap input[type="hidden"] { display: none; }
+
+    @media (max-width: 820px) {
+        .contact-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 540px) {
+        .input-box { grid-template-columns: 1fr; }
+    }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    .premium-footer { background: var(--ink); color: rgba(255,255,255,0.6); }
+    .footer-cta {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 56px 8vw; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-cta h2 {
+        font-family: var(--ff-serif); font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 300; color: #fff; letter-spacing: -0.015em;
+    }
+    .footer-btn {
+        display: inline-flex; align-items: center; gap: 10px;
+        padding: 13px 30px; border: 1.5px solid rgba(255,255,255,0.3); border-radius: 50px;
+        font-family: var(--ff-sans); font-size: 0.88rem; color: #fff;
+        transition: background var(--transition), border-color var(--transition);
+    }
+    .footer-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); }
+    .footer-content {
+        display: grid; grid-template-columns: 2fr 1fr;
+        gap: 48px; padding: 56px 8vw; border-bottom: 1px solid rgba(255,255,255,0.08);
+        align-items: start;
+    }
+    .footer-column:last-child { text-align: right; }
+    .footer-column:last-child a { justify-content: flex-end; }
+    .footer-column h3 {
+        font-family: var(--ff-serif); font-size: 1.8rem; font-weight: 300;
+        color: #fff; margin-bottom: 12px;
+    }
+    .footer-column h3 span { color: var(--accent); }
+    .footer-column > p { font-size: 0.85rem; line-height: 1.8; margin-bottom: 20px; }
+    .footer-column h4 {
+        font-family: var(--ff-sans); font-size: 0.76rem; font-weight: 600;
+        letter-spacing: 0.1em; text-transform: uppercase;
+        color: rgba(255,255,255,0.38); margin-bottom: 18px;
+    }
+    .footer-column a {
+        display: block; font-size: 0.87rem; color: rgba(255,255,255,0.58);
+        margin-bottom: 10px; transition: color var(--transition);
+    }
+    .footer-column a:hover { color: #fff; }
+    .footer-socials { display: flex; gap: 10px; margin-top: 4px; }
+    .footer-socials a {
+        display: inline-flex; margin: 0;
+        width: 36px; height: 36px; border-radius: 50%;
+        border: 1px solid rgba(255,255,255,0.18);
+        align-items: center; justify-content: center;
+        font-size: 0.82rem; color: rgba(255,255,255,0.58);
+        transition: background var(--transition), color var(--transition), border-color var(--transition);
+    }
+    .footer-socials a:hover { background: rgba(255,255,255,0.12); color:#fff; border-color:rgba(255,255,255,0.5); }
+    .footer-bottom {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 22px 8vw; font-size: 0.8rem;
+    }
+    .footer-bottom i { color: #e05; margin: 0 2px; }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { color: rgba(255,255,255,0.4); font-size:0.8rem; transition: color var(--transition); }
+    .footer-legal a:hover { color: #fff; }
+
+    /* ══════════════════════════════════════════
+       SCROLL REVEAL
+    ══════════════════════════════════════════ */
+    [data-sr] { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    [data-sr].visible { opacity: 1; transform: none; }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width: 900px) {
+        .about { grid-template-columns: 1fr; gap: 40px; }
+        .about-img { max-width: 240px; margin: 0 auto; }
+        .achievement-row { grid-template-columns: 1fr; }
+        .achievement-img img { height: 200px; }
+        .achievement-content { padding: 24px; }
+        .footer-content { grid-template-columns: 1fr 1fr; }
+        .footer-cta { flex-direction: column; gap: 24px; text-align: center; }
+    }
+    @media (max-width: 640px) {
+        .header { padding: 12px 18px; }
+        .navbar { display: none; }
+        .menu-icon { display: flex; }
+        .menu-icon .nav-pill { padding: 10px 14px; cursor: pointer; }
+        .hero-content {
+            max-width: 100%;
+            padding: 0 18px 130px 18px;
+            align-items: center;
+            text-align: center;
+        }
+        .hero-content h1 { font-size: clamp(2.2rem, 10vw, 3rem); }
+        .hero-subtitle { font-size: 0.78rem; }
+        .hero-badges { align-items: center; }
+        .hero-badge {
+            font-size: 0.72rem;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .badge-logo { width: 26px !important; height: 26px !important; }
+        .input-box { grid-template-columns: 1fr; }
+        .footer-content { grid-template-columns: 1fr; }
+        .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+        .hero-action-bar { flex-wrap: wrap; justify-content: center; width: 92%; gap: 8px; }
+        .action-btn { font-size: 0.76rem; padding: 9px 16px; }
+    }
+
+    @media (max-width: 380px) {
+        .hero-badge { font-size: 0.65rem; }
+        .badge-logo { width: 22px !important; height: 22px !important; }
+        .hero-content h1 { font-size: 2rem; }
+    }
+
+    /* ══════════════════════════════════════════
+       BACK TO TOP BUTTON
+    ══════════════════════════════════════════ */
+    .back-to-top {
+        position: fixed;
+        bottom: 32px;
+        right: 32px;
+        z-index: 999;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--white);
+        border: 1.5px solid rgba(0,0,0,0.12);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--ink);
+        font-size: 0.9rem;
+        text-decoration: none;
+        opacity: 0;
+        transform: translateY(16px);
+        transition: opacity 0.3s ease, transform 0.3s ease,
+                    background var(--transition), box-shadow var(--transition);
+        pointer-events: none;
+    }
+    .back-to-top.visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+    .back-to-top:hover {
+        background: var(--ink);
+        color: #fff;
+        box-shadow: 0 8px 28px rgba(0,0,0,0.22);
+    }
+
+    /* Circular progress ring */
+    .back-to-top svg {
+        position: absolute;
+        inset: -3px;
+        width: calc(100% + 6px);
+        height: calc(100% + 6px);
+        transform: rotate(-90deg);
+        pointer-events: none;
+    }
+    .back-to-top svg circle {
+        fill: none;
+        stroke: rgba(0,0,0,0.15);
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 0.1s linear, stroke 0.3s;
+    }
+    .back-to-top svg circle.progress {
+        stroke: var(--ink);
+    }
+    .back-to-top:hover svg circle.progress {
+        stroke: rgba(255,255,255,0.7);
+    }
+    .back-to-top:hover svg circle.track {
+        stroke: rgba(255,255,255,0.2);
+    }
+
+    @media (max-width: 640px) {
+        .back-to-top { bottom: 20px; right: 20px; width: 42px; height: 42px; }
+    }
+
+    /* ══════════════════════════════════════════
+       CIRCUIT TORCH OVERLAY
+    ══════════════════════════════════════════ */
+    #circuit-canvas {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9998;
+        pointer-events: none;
+        opacity: 1;
+    }
+
+    </style>
+</head>
+
+<body>
+    <div class="noise-overlay"></div>
+
+    <!-- ══ HEADER ══ -->
+    <header class="header">
+        <nav class="navbara">
+            <div class="nav-pill">
+                <div class="logo-icon"><i class="fas fa-microchip"></i></div>
+                <a href="#hero" class="logo">#Cha-nuka-dev<span>.</span></a>
+            </div>
+        </nav>
+        <nav class="navbar">
+            <div class="nav-pill">
+                <a href="#hero" class="active">Home</a>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#achievements">Achievements</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+        <div class="menu-icon" id="menu-icon">
+            <div class="nav-pill" style="padding:10px 14px;">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- ══ HERO ══ -->
+    <section class="hero" id="hero">
+        <!-- CSS Morphing Blob Background -->
+        <div class="hero-bg">
+            <div class="hero-blob"></div>
+            <div class="hero-blob-2"></div>
+            <div class="hero-blob-3"></div>
+            <div class="hero-grain"></div>
+            <div class="hero-fade"></div>
+        </div>
+        <div class="hero-content">
+            <h1><span>Chanuka Sanesh</span></h1>
+            <div class="hero-subtitle">Electronic &amp; Telecommunication Engineering Undergraduate</div>
+            <div class="hero-badges">
+                <div class="hero-badge">
+                    <div class="badge-logo" style="width:42px;height:42px;">
+                        <img src="uom.png" alt="University of Moratuwa">
+                    </div>
+                    Undergraduate at <strong>&nbsp;ITUM · University of Moratuwa</strong>&nbsp;(NDT)
+                </div>
+                <div class="hero-badge">
+                    <div class="badge-logo">
+                        <img src="ucsc.png" alt="UCSC">
+                    </div>
+                    BIT (external) &nbsp;·&nbsp; <strong>UCSC</strong>
+                </div>
+            </div>
+        </div>
+        <span class="multiple-text"></span>
+        <div class="hero-action-bar">
+            <a href="img/cv.pdf" class="action-btn" download>Download CV</a>
+            <a href="#contact" class="action-btn">Contact Info</a>
+            <div class="action-divider"></div>
+            <div class="action-socials">
+                <a href="https://github.com/Cha-nuka-dev" target="_blank" class="action-social-btn"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/chanukajayasooriya/" target="_blank" class="action-social-btn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.youtube.com/@Formula1SL" target="_blank" class="action-social-btn"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ ABOUT ══ -->
+    <section class="about" id="about">
+
+        <!-- Profile image -->
+        <div class="about-img" data-sr>
+            <img src="img/profile.png" alt="Chanuka Sanesh">
+        </div>
+
+        <!-- Right column -->
+        <div class="about-content" data-sr>
+
+            <!-- Section header -->
+            <div class="about-header">
+                <p class="about-sub">Get to Know More</p>
+                <h2 class="heading">#About <span>Me</span></h2>
+            </div>
+
+            <!-- Info cards -->
+            <div class="about-cards">
+
+                <!-- Card 1: Academic Standing (UoM) -->
+                <div class="about-card">
+                    <!-- PCB corner pads -->
+                    <span class="about-card-pad tl"></span>
+                    <span class="about-card-pad tr"></span>
+                    <span class="about-card-pad bl"></span>
+                    <span class="about-card-pad br"></span>
+
+                    <!-- Circuit texture -->
+                    <div class="about-card-circuit">
+                        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="0" y1="30" x2="200" y2="30" stroke="#000" stroke-width="1"/>
+                            <line x1="0" y1="60" x2="120" y2="60" stroke="#000" stroke-width="1"/>
+                            <line x1="120" y1="60" x2="120" y2="100" stroke="#000" stroke-width="1"/>
+                            <line x1="120" y1="100" x2="200" y2="100" stroke="#000" stroke-width="1"/>
+                            <line x1="40" y1="0" x2="40" y2="60" stroke="#000" stroke-width="1"/>
+                            <line x1="160" y1="30" x2="160" y2="160" stroke="#000" stroke-width="1"/>
+                            <line x1="80" y1="100" x2="80" y2="160" stroke="#000" stroke-width="1"/>
+                            <line x1="0" y1="130" x2="80" y2="130" stroke="#000" stroke-width="1"/>
+                            <circle cx="40" cy="30" r="3" fill="none" stroke="#000" stroke-width="1"/>
+                            <circle cx="40" cy="30" r="1.2" fill="#000"/>
+                            <circle cx="120" cy="60" r="3" fill="none" stroke="#000" stroke-width="1"/>
+                            <circle cx="120" cy="60" r="1.2" fill="#000"/>
+                            <circle cx="120" cy="100" r="3" fill="none" stroke="#000" stroke-width="1"/>
+                            <circle cx="120" cy="100" r="1.2" fill="#000"/>
+                            <circle cx="80" cy="130" r="3" fill="none" stroke="#000" stroke-width="1"/>
+                            <circle cx="80" cy="130" r="1.2" fill="#000"/>
+                            <circle cx="160" cy="30" r="3" fill="none" stroke="#000" stroke-width="1"/>
+                            <circle cx="160" cy="30" r="1.2" fill="#000"/>
+                            <rect x="34" y="55" width="12" height="7" fill="none" stroke="#000" stroke-width="0.8"/>
+                            <rect x="154" y="95" width="12" height="7" fill="none" stroke="#000" stroke-width="0.8"/>
+                        </svg>
+                    </div>
+
+                    <!-- Faded UoM logo -->
+                    <div class="about-card-logo">
+                        <img src="uom.png" alt="UoM">
+                    </div>
+
+                    <div class="about-card-inner">
+                        <div class="about-card-label">Current Academic Standing</div>
+                        <div class="about-card-title">NDT Undergraduate</div>
+                        <div class="about-card-sub">
+                            National Diploma in Technology<br>
+                            <strong>Electrical &amp; Electronic Engineering</strong><br>
+                            specializing in <strong>Embedded Systems &amp; IoT</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Education (UCSC) -->
+                <div class="about-card">
+                    <span class="about-card-pad tl"></span>
+                    <span class="about-card-pad tr"></span>
+                    <span class="about-card-pad bl"></span>
+                    <span class="about-card-pad br"></span>
+
+                    <div class="about-card-circuit">
+                        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="0" y1="50" x2="70" y2="50" stroke="#000" stroke-width="1"/>
+                            <line x1="70" y1="50" x2="70" y2="20" stroke="#000" stroke-width="1"/>
+                            <line x1="70" y1="20" x2="200" y2="20" stroke="#000" stroke-width="1"/>
+                            <line x1="0" y1="110" x2="200" y2="110" stroke="#000" stroke-width="1"/>
+                            <line x1="130" y1="20" x2="130" y2="110" stroke="#000" stroke-width="1"/>
+                            <line x1="50" y1="110" x2="50" y2="160" stroke="#000" stroke-width="1"/>
+                            <line x1="170" y1="110" x2="170" y2="160" stroke="#000" stroke-width="1"/>
+                            <line x1="0" y1="80" x2="40" y2="80" stroke="#000" stroke-width="1"/>
+                            <circle cx="70" cy="50" r="3" fill="none" stroke="#000" stroke-width="1"/>
+                            <circle cx="70" cy="50" r="1.2" fill="#000"/>
+                            <circle cx="130" cy="20" r="3" fill="none" stroke="#000" stroke-width="1"/>
+                            <circle cx="130" cy="20" r="1.2" fill="#000"/>
+                            <circle cx="130" cy="110" r="3" fill="none" stroke="#000" stroke-width="1"/>
+                            <circle cx="130" cy="110" r="1.2" fill="#000"/>
+                            <circle cx="50" cy="110" r="3" fill="none" stroke="#000" stroke-width="1"/>
+                            <circle cx="50" cy="110" r="1.2" fill="#000"/>
+                            <rect x="22" y="75" width="12" height="7" fill="none" stroke="#000" stroke-width="0.8"/>
+                            <rect x="122" y="105" width="12" height="7" fill="none" stroke="#000" stroke-width="0.8"/>
+                        </svg>
+                    </div>
+
+                    <!-- Faded UCSC logo -->
+                    <div class="about-card-logo">
+                        <img src="ucsc.png" alt="UCSC">
+                    </div>
+
+                    <div class="about-card-inner">
+                        <div class="about-card-label">Education</div>
+                        <div class="about-card-title">BIT (External)</div>
+                        <div class="about-card-sub">
+                            Bachelor of Information Technology<br>
+                            <strong>University of Colombo</strong><br>
+                            School of Computing &nbsp;·&nbsp; <strong>UCSC</strong>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /about-cards -->
+
+            <!-- Bio text -->
+            <p>I completed my secondary education at Niwattaka Chetiya M.V., Anuradhapura, focusing on the Physical Science stream for my Advanced Levels in 2022. I am currently pursuing a National Diploma in Technology (NDT) in Electrical and Electronic Engineering at the Institute of Technology, University of Moratuwa.<br><br>Driven by a passion for AI, Robotics, and Machine Learning, I actively refine my technical skills and problem-solving abilities through hands-on personal projects.</p>
+            <a href="https://www.linkedin.com/in/chanukajayasooriya/" class="btn" target="_blank">Read More</a>
+
+        </div>
+    </section>
+
+    <!-- ══ SKILLS ══ -->
+    <section class="skills" id="skills">
+        <h2 class="heading">My <span>Skills</span></h2>
+        <div class="bento-grid">
+
+            <!-- PCB Design -->
+            <div class="bento-card" data-sr>
+                <i class="fas fa-microchip"></i>
+                <h3>PCB Design</h3>
+                <p>Expertise in designing multi-layer PCBs for high-frequency and power applications. Schematic capture, layout, DRC and Gerber generation.</p>
+                <div class="skill-logos">
+                    <div class="skill-logo">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMDAwMDAwIiBzdHlsZT0ib3BhY2l0eToxOyI+PHBhdGggIGQ9Ik0xOS4xNCA1Ljg3NmExIDEgMCAwIDAtLjQ0Mi0uNDQyTDkuNzQ0LjE3MWMtLjMyOS0uMjI2LS44NDMtLjIyNi0xLjIwMy0uMDFMNS4xNDggMi4xNDVhMiAyIDAgMCAwLS4xNDQuMTIzYTEuMSAxLjEgMCAwIDAtLjI4OC43MmwuMDEgNi41NjlsLS4wMi4yMTVsLjA2Mi4xMjNhLjUuNSAwIDAgMCAuMTk1LjIwNmEuNTIuNTIgMCAwIDAgLjU1NS4wMUw4Ljg1OSA4LjJhLjYuNiAwIDAgMCAuMTc1LS4xNzVsLjA4Mi0uMTY1VjQuNjQzbDIuMjUxIDEuMzI2bDMuNTM2IDIuMDc3YS40LjQgMCAwIDEgLjE2NC4xODVhLjQ0LjQ0IDAgMCAxIC4wNjIuMjI2djcuMDUyYS41LjUgMCAwIDEtLjA3Mi4yNTdjLS4wNDEuMDcyLS4wODIuMTIzLS4xNTQuMTU0bC00LjIyNSAyLjQ4OGwtMS41NzMuOTI1di0zLjIyOGwxLjk1My0xLjE3MmwxLjA0OS0uNjI3bC4xODUtLjE3NWwuMDIxLS4wNTFhLjU0LjU0IDAgMCAwIC4wNjItLjI0N1Y5Ljk5OWEuNS41IDAgMCAwLS4wOTItLjI4OGwtLjA2Mi0uMTIzbC0uMTQ0LS4wNzJjLS4wOTMtLjA0MS0uMTc1LS4wNDEtLjI0Ny0uMDQxbC0uMTc1LjAxbC02LjM2MyAzLjg2NWExLjEzIDEuMTMgMCAwIDAtLjQ0Mi40NjNhMS4zIDEuMyAwIDAgMC0uMTQ0LjYwN3Y2LjU1OWMwIC4yNTcuMTAzLjUxNC4zMjkuNzVjLjA4Mi4wNjIuMTU0LjExMy4yMzYuMTY0bDMuMzQxIDEuOTQzYy4xODYuMTEzLjM4MS4xNjQuNTk3LjE2NHMuNDIyLS4wNTEuNTk2LS4xNjRsOC44ODItNS4yMTJjLjE5NS0uMTAzLjM2LS4yNjcuNDQyLS40MzJjLjExMy0uMTg1LjE2NC0uNDAxLjE2NC0uNjE3VjYuNDgzYTEuMjQgMS4yNCAwIDAgMC0uMTUzLS42MDdNOC4zODcgNy42MjRMNS40NDcgOS4zMlYyLjk4OGMwLS4wNzIuMDMxLS4xNTQuMDkyLS4yMTZsLjIxNi0uMTIzbDIuNjMyIDEuNTYzem0tMi45NTEgNi43OTVxMC0uMTM5LjA2Mi0uMjc4YS40LjQgMCAwIDEgLjE3NS0uMTc1bDUuOTczLTMuNjI5djMuMzkybC0uOTU2LjU3NmwtMi4zMTMgMS4zODhsLTIuOTQgMS43Nzh2LTMuMDUyem0wIDYuNTU5di0yLjY2M2wyLjk0LTEuNzY4djMuMjE4bC0yLjYzMiAxLjU1MmwtLjEwMy0uMDYyYy0uMDUxLS4wMzEtLjA5My0uMDUxLS4xMDMtLjA2MmMtLjA2MS0uMDcxLS4xMDItLjE0My0uMTAyLS4yMTVtMTMuMTI4LTMuNDAzYS41LjUgMCAwIDEtLjA3Mi4yNTdhLjM0LjM0IDAgMCAxLS4xNjUuMTU0bC04Ljg5MiA1LjIyMmEuNDA1LjQwNSAwIDAgMS0uNDUyIDBsLTIuNTA4LTEuNDdsNC41NzUtMi42OTN2LS4wMWw0LjIxNS0yLjQ3OGExIDEgMCAwIDAgLjQzMi0uNDQyYTEuMTMgMS4xMyAwIDAgMCAuMTc1LS42MDZWOC40NTdjMC0uMjE2LS4wNjItLjQyMS0uMTY1LS41OTZhMS4yIDEuMiAwIDAgMC0uNDMyLS40NDJsLTMuNTM2LTIuMDc3bC0zLjM1Mi0xLjk3NGwtMS45MjMtMS4xNDFMOC45MTEuNzg4YS40NS40NSAwIDAgMSAuNDUyIDBsOC45ODUgNS4yOTRhLjMyLjMyIDAgMCAxIC4xNTQuMTU0YS41LjUgMCAwIDEgLjA2Mi4yNDd6Ii8+PC9zdmc+" alt="Altium">
+                        <span>Altium</span>
+                    </div>
+                    <div class="skill-logo">
+                        <img src="data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='24' height='24' fill='%23000000'><path d='M0 0v512h512V0zm407.66 42.014c34.56-19.924 77.994 5.116 77.994 44.965s-43.434 64.89-77.994 44.965s-34.56-70.006 0-89.93M223.27 455.097c4.285-18.443-3.36-28.73-18.185-51.957l-75.078-102.356v103.654q0 36.11 14.548 50.659h-122.1C35.16 440.897 37.36 432.755 37 404.698V118.673c-.005-28.4-1.314-35.496-14.545-50.399h122.1q-14.549 14.55-14.548 50.4v95.34l74.558-94.302c14.622-19.05 27.149-37.565 21.563-51.437H356.28c-24.488 16.204-37.15 35.07-58.192 60.79l-97.68 121.58l116.644 160.548c13.797 18.434 29.43 37.085 39.747 43.904zm153.274 0c8.769-10.373 12.402-16.005 11.95-45.723V216.093c.574-23.678-.854-32.672-11.69-45.203H478.9v238.484c.263 25.475.386 32.133 11.95 45.723z'/></svg>" alt="KiCad">
+                        <span>KiCad</span>
+                    </div>
+                    <div class="skill-logo">
+                        <img src="data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128' width='24' height='24' fill='%23000000'><path d='M23.277 0v89.35h91.61V6.023A6.016 6.016 0 0 0 108.863 0zm-1.002.387L3.701 11.578v89.18l18.574-11.192V.386zM51.835 19h33.243v9.37H64.852v12.42h17.103v9.22H64.852v21.047H51.836zm64.056.576v70.778H22.918l-9.05 5.453v25.668A6.525 6.525 0 0 0 20.392 128h103.906V19.576h-8.408zm-29.418 79.29q3.124-.001 5.01 1.42q1.884 1.42 1.988 4.13h-4.157c-.24-1.69-1.062-2.468-2.814-2.479c-.895-.005-1.533.155-1.912.465q-.568.465-.567 1.162v.362c0 .43.18.81.567 1.111c.389.302 1.124.587 2.17.928l2.453.8c2.967.969 4.389 2.353 4.389 4.932v.776a4.58 4.58 0 0 1-.852 2.71c-1.351 1.891-3.893 2.583-6.3 2.583c-2.29 0-4.096-.507-5.397-1.55c-1.299-1.04-1.997-2.556-2.117-4.519h4.26c.251 2.224 1.11 2.739 3.253 2.79c1.831.043 2.635-.778 2.635-1.757v-.54c0-.917-.457-1.344-1.162-1.655c-.458-.202-1.078-.422-1.988-.723l-2.506-.826c-2.557-.843-3.899-2.09-3.899-4.545v-.644c0-.844.232-1.64.723-2.375c1.337-2.003 4.067-2.557 6.223-2.557zm-38.989.411h11.541v3.254h-7.023v4.313h5.94v3.2h-5.94v7.31h-4.518zm13.762 0h4.52c.006 4.253-.019 8.508.01 12.76c.006.998.522 2.094 1.572 2.363c1.441.37 3.094-.03 4.072-1.18V99.278h4.52v18.077h-3.952l-.232-1.291c-1.938 1.79-4.98 2.205-7.365 1.132c-1.97-.886-3.125-3.23-3.127-5.14l-.018-12.778z'/></svg>" alt="Fusion 360">
+                        <span>Fusion 360</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Robotics -->
+            <div class="bento-card" data-sr style="transition-delay:0.1s">
+                <i class="fas fa-robot"></i>
+                <h3>Robotics</h3>
+                <p>Building autonomous robots with real-time sensor fusion, motor control, and embedded firmware on modern microcontroller platforms.</p>
+                <div class="skill-logos">
+                    <div class="skill-logo">
+                        <img src="https://cdn.simpleicons.org/arduino/00979D" alt="Arduino">
+                        <span>Arduino</span>
+                    </div>
+                    <div class="skill-logo">
+                        <img src="https://cdn.simpleicons.org/raspberrypi/A22846" alt="RPi">
+                        <span>Raspberry Pi</span>
+                    </div>
+                    <div class="skill-logo">
+                        <img src="https://cdn.simpleicons.org/stmicroelectronics/03234B" alt="STM32">
+                        <span>STM32</span>
+                    </div>
+                    <div class="skill-logo">
+                        <img src="https://cdn.simpleicons.org/espressif/E7352C" alt="ESP32">
+                        <span>ESP32</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- C / C++ / Java -->
+            <div class="bento-card" data-sr style="transition-delay:0.2s">
+                <i class="fas fa-code"></i>
+                <h3>Embedded C/C++ &amp; Java</h3>
+                <p>Low-level microcontroller programming with memory optimization, RTOS integration, and object-oriented design patterns.</p>
+                <div class="skill-logos">
+                    <div class="skill-logo">
+                        <img src="https://cdn.simpleicons.org/c/A8B9CC" alt="C">
+                        <span>C</span>
+                    </div>
+                    <div class="skill-logo">
+                        <img src="https://cdn.simpleicons.org/cplusplus/00599C" alt="C++">
+                        <span>C++</span>
+                    </div>
+                    <div class="skill-logo">
+                        <img src="data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'><path fill='%230074BD' d='M47.617 98.12s-4.767 2.774 3.397 3.71c9.892 1.13 14.947.968 25.845-1.092 0 0 2.871 1.795 6.873 3.351-24.439 10.47-55.308-.607-36.115-5.969zm-2.988-13.665s-5.348 3.959 2.823 4.805c10.567 1.091 18.91 1.18 33.354-1.6 0 0 1.993 2.025 5.132 3.131-29.542 8.64-62.446.68-41.309-6.336z'/><path fill='%23EA2D2E' d='M69.802 61.271c6.025 6.935-1.58 13.17-1.58 13.17s15.289-7.891 8.269-17.777c-6.559-9.215-11.587-13.792 15.635-29.58 0 .001-42.731 10.67-22.324 34.187z'/><path fill='%230074BD' d='M102.123 108.229s3.529 2.91-3.888 5.159c-14.102 4.272-58.706 5.56-71.094.171-4.451-1.938 3.899-4.625 6.526-5.192 2.739-.593 4.303-.485 4.303-.485-4.953-3.487-32.013 6.85-13.743 9.815 49.821 8.076 90.817-3.637 77.896-9.468zM49.912 70.294s-22.686 5.389-8.033 7.348c6.188.828 18.518.638 30.011-.326 9.39-.789 18.813-2.474 18.813-2.474s-3.308 1.419-5.704 3.053c-23.042 6.061-67.544 3.238-54.731-2.958 10.832-5.239 19.644-4.643 19.644-4.643zm40.697 22.747c23.421-12.167 12.591-23.86 5.032-22.285-1.848.385-2.677.72-2.677.72s.688-1.079 2-1.543c14.953-5.255 26.451 15.503-4.823 23.725 0-.002.359-.327.468-.617z'/><path fill='%23EA2D2E' d='M76.491 1.587S89.459 14.563 64.188 34.51c-20.266 16.006-4.621 25.13-.007 35.559-11.831-10.673-20.509-20.07-14.688-28.815C58.041 28.42 81.722 22.195 76.491 1.587z'/><path fill='%230074BD' d='M52.214 126.021c22.476 1.437 57-.8 57.817-11.436 0 0-1.571 4.032-18.577 7.231-19.186 3.612-42.854 3.191-56.887.874 0 .001 2.875 2.381 17.647 3.331z'/></svg>" alt="Java">
+                        <span>Java</span>
+                    </div>
+                    <div class="skill-logo">
+                        <img src="data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' width='24' height='24'><rect x='0' y='0' width='40' height='40' fill='%237AA116'/><path d='M13.9727153,18.7962963 C14.6616907,18.7962963 15.2236706,19.3581986 15.2236706,20.0470788 C15.2236706,20.7369588 14.6616907,21.2978612 13.9727153,21.2978612 C13.2837399,21.2978612 12.7217599,20.7369588 12.7217599,20.0470788 C12.7217599,19.3581986 13.2837399,18.7962963 13.9727153,18.7962963 Z M17.9245741,14.8269866 C18.2005643,15.4838724 18.7805436,15.9787863 19.4855184,16.1447574 L19.496518,25.4551382 C18.9755366,25.4081464 18.460555,25.3081638 17.9805721,25.1141975 L17.9805721,19.9590941 C17.9805721,19.6821422 17.7565801,19.459181 17.48059,19.459181 L16.135638,19.459181 C15.9516446,18.7852982 15.4696618,18.234394 14.8336845,17.9694401 C15.3876647,16.5346896 16.500625,15.4018866 17.9245741,14.8269866 Z M20.0005,12.7083551 C20.6904753,12.7083551 21.2514553,13.2702573 21.2514553,13.9601374 C21.2514553,14.6500174 20.6904753,15.2109198 20.0005,15.2109198 C19.3115246,15.2109198 18.7495447,14.6500174 18.7495447,13.9601374 C18.7495447,13.2702573 19.3115246,12.7083551 20.0005,12.7083551 Z M25.1673155,17.9694401 C24.5253384,18.2363937 24.0383558,18.7962963 23.8603621,19.4791775 L22.5214099,19.4791775 C22.2444198,19.4791775 22.0214278,19.7031386 22.0214278,19.9790906 L22.0214278,25.1141975 C21.5414449,25.3101634 21.0224635,25.4091462 20.4964823,25.4561381 L20.4854827,16.1547557 C21.2054569,15.9957833 21.7974358,15.4928708 22.0764258,14.8259868 C23.501375,15.4008868 24.6143352,16.53269 25.1673155,17.9694401 Z M27.28024,20.0470788 C27.28024,20.7369588 26.7182601,21.2978612 26.0292847,21.2978612 C25.3393093,21.2978612 24.7783293,20.7369588 24.7783293,20.0470788 C24.7783293,19.3581986 25.3393093,18.7962963 26.0292847,18.7962963 C26.7182601,18.7962963 27.28024,19.3581986 27.28024,20.0470788 Z M13.9097175,22.2916884 C14.148709,22.9135802 14.4576979,23.5034777 14.8686833,24.013389 C15.5346595,24.8192488 16.219635,25.3581551 16.9806078,25.7530864 L16.9806078,28.8865415 L17.9805721,28.8865415 L17.9805721,26.1760129 C18.4675547,26.3379847 18.9745366,26.4409668 19.4975179,26.4809598 L19.5005178,28.9485307 L20.5004821,28.9475309 L20.4974822,26.4809598 C21.0244634,26.4419666 21.5344452,26.3389845 22.0214278,26.1760129 L22.0214278,28.8865415 L23.0213921,28.8865415 L23.0213921,25.7550861 C24.4313417,25.0182142 25.5403021,23.7714311 26.1082818,22.2906886 C27.3122388,22.2476961 28.2802043,21.2608677 28.2802043,20.0470788 C28.2802043,18.855286 27.3462376,17.8864545 26.1722796,17.8114676 C25.5243027,15.9487915 24.0863541,14.4950443 22.2384201,13.8211615 C22.1644227,12.645366 21.1954573,11.708529 20.0005,11.708529 C18.8075426,11.708529 17.8365773,12.645366 17.7635799,13.8211615 C15.9156459,14.4950443 14.4776972,15.951791 13.8287204,17.8114676 C12.6567623,17.8864545 11.7217957,18.855286 11.7217957,20.0470788 C11.7217957,21.2668666 12.6987608,22.2576943 13.9097175,22.2916884 Z M9.04689118,31.0001739 L30.9541088,31.0001739 L30.9541088,10.0008259 L9.04689118,10.0008259 Z' fill='%23FFFFFF'/></svg>" alt="FreeRTOS">
+                        <span>FreeRTOS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Python & AI -->
+            <div class="bento-card" data-sr style="transition-delay:0.3s">
+                <i class="fab fa-python"></i>
+                <h3>Python &amp; AI</h3>
+                <p>Data science pipelines, deep learning model training and deployment for intelligent embedded and IoT systems.</p>
+                <div class="skill-logos">
+                    <div class="skill-logo">
+                        <img src="https://cdn.simpleicons.org/python/3776AB" alt="Python">
+                        <span>Python</span>
+                    </div>
+                    <div class="skill-logo">
+                        <img src="https://cdn.simpleicons.org/pytorch/EE4C2C" alt="PyTorch">
+                        <span>PyTorch</span>
+                    </div>
+                    <div class="skill-logo">
+                        <img src="https://cdn.simpleicons.org/keras/D00000" alt="Keras">
+                        <span>Keras</span>
+                    </div>
+                    <div class="skill-logo">
+                        <img src="https://cdn.simpleicons.org/numpy/013243" alt="NumPy">
+                        <span>NumPy</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ PROJECTS ══ -->
+    <section class="projects" id="projects">
+        <div class="projects-header">
+            <p class="proj-sub">Explore My Recent</p>
+            <h2 class="heading">Latest <span>Projects</span></h2>
+        </div>
+
+        <div class="carousel-wrapper">
+            <!-- Prev arrow -->
+            <button class="carousel-arrow prev" id="proj-prev" aria-label="Previous">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+
+            <div class="carousel-track-outer">
+                <div class="carousel-track" id="proj-track">
+
+                    <!-- Card 1 -->
+                    <div class="proj-card">
+                        <div class="proj-card-img">
+                            <img src="img/project1.jpg" alt="PCB Design Project">
+                            <span class="proj-tag pcb">PCB Design</span>
+                        </div>
+                        <div class="proj-card-body">
+                            <h4>PCB Design Project</h4>
+                            <p>Designed a custom multi-layer PCB for high-frequency signal processing using Altium Designer.</p>
+                            <div class="proj-card-actions">
+                                <a href="#" class="proj-action-btn" title="View Project"><i class="fas fa-external-link-alt"></i></a>
+                                <a href="#" class="proj-action-btn" title="GitHub"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="proj-card">
+                        <div class="proj-card-img">
+                            <img src="img/project2.jpg" alt="Autonomous Robot">
+                            <span class="proj-tag robotics">Robotics</span>
+                        </div>
+                        <div class="proj-card-body">
+                            <h4>Autonomous Robot</h4>
+                            <p>Developed a line-following and obstacle-avoiding robot using STM32 and custom sensor fusion.</p>
+                            <div class="proj-card-actions">
+                                <a href="https://www.linkedin.com/posts/chanukajayasooriya_vertex2025-robotics-raspberrypipico-activity-7406862981340418049-xldS" class="proj-action-btn" title="View Project" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                                <a href="#" class="proj-action-btn" title="GitHub"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="proj-card">
+                        <div class="proj-card-img">
+                            <img src="img/project3.jpg" alt="IoT Home Automation">
+                            <span class="proj-tag iot">IoT</span>
+                        </div>
+                        <div class="proj-card-body">
+                            <h4>IoT Home Automation</h4>
+                            <p>Smart home system controlling appliances via a web interface built on ESP32 and MQTT.</p>
+                            <div class="proj-card-actions">
+                                <a href="#" class="proj-action-btn" title="View Project"><i class="fas fa-external-link-alt"></i></a>
+                                <a href="#" class="proj-action-btn" title="GitHub"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 — AgriBot -->
+                    <div class="proj-card">
+                        <div class="proj-card-img">
+                            <img src="img/project1.jpg" alt="AgriBot-1">
+                            <span class="proj-tag firmware">Firmware</span>
+                        </div>
+                        <div class="proj-card-body">
+                            <h4>AgriBot-1</h4>
+                            <p>Precision agriculture robot on ESP32-S3 with FreeRTOS, NPK soil sensing and auto liquid dosing.</p>
+                            <div class="proj-card-actions">
+                                <a href="#" class="proj-action-btn" title="View Project"><i class="fas fa-external-link-alt"></i></a>
+                                <a href="#" class="proj-action-btn" title="GitHub"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- /track -->
+            </div><!-- /track-outer -->
+
+            <!-- Next arrow -->
+            <button class="carousel-arrow next" id="proj-next" aria-label="Next">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div><!-- /carousel-wrapper -->
+
+        <!-- Dots -->
+        <div class="carousel-dots" id="proj-dots"></div>
+
+    </section>
+
+    <!-- ══ ACHIEVEMENTS ══ -->
+    <section class="achievements" id="achievements">
+        <h2 class="heading">My <span>Achievements</span></h2>
+
+        <div class="achievement-container">
+
+            <!-- ─── Achievement 1 ─── -->
+            <!-- To add more achievements: copy the entire .ach-card block below and paste it after, then edit the content -->
+            <div class="ach-card" data-sr>
+                <div class="ach-img">
+                    <img src="img/racing_win.jpg" alt="GridX Motorsport Win">
+                </div>
+                <div class="ach-body">
+                    <div class="ach-meta">
+                        <span class="ach-badge gold"><i class="fas fa-trophy"></i> 1st Place</span>
+                        <span class="ach-date">2024</span>
+                    </div>
+                    <div class="ach-title">Winners of the GridX: Sri Lanka's 1st STEM Motorsport Event</div>
+                    <p class="ach-desc">Winner of the Vanguard Racing Team at the inaugural GridX STEM Motorsport Challenge. Made history showcasing precision engineering, rapid prototyping, and teamwork on the track against top undergraduate teams.</p>
+                    <a href="https://itum.mrt.ac.lk/node/1327" target="_blank" class="ach-btn">
+                        <i class="fas fa-external-link-alt"></i> See More
+                    </a>
+                </div>
+            </div>
+
+            <!-- ─── Achievement 2 — ADD YOUR NEXT ACHIEVEMENT HERE ─── -->
+            <div class="ach-card" data-sr style="transition-delay:0.12s">
+                <div class="ach-img">
+                    <img src="img/racing_win.jpg" alt="Finalist Achievement">
+                </div>
+                <div class="ach-body">
+                    <div class="ach-meta">
+                        <span class="ach-badge finalist"><i class="fas fa-star"></i> Finalist</span>
+                        <span class="ach-date">2024</span>
+                    </div>
+                    <div class="ach-title">Achievement Title Here</div>
+                    <p class="ach-desc">Describe your finalist achievement here — the competition, what you built, and how far you advanced.</p>
+                    <a href="#" target="_blank" class="ach-btn">
+                        <i class="fas fa-external-link-alt"></i> See More
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ CONTACT ══ -->
+    <section class="contact" id="contact">
+        <p class="contact-sub">Get in Touch</p>
+        <h2 class="heading">Contact <span>Me</span></h2>
+
+        <div class="contact-layout">
+
+            <!-- LEFT: Info cards -->
+            <div class="contact-panel" data-sr>
+                <!-- Circuit texture -->
+                <div class="contact-circuit">
+                    <svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="0" y1="60" x2="300" y2="60" stroke="#000" stroke-width="1.2"/>
+                        <line x1="0" y1="150" x2="180" y2="150" stroke="#000" stroke-width="1.2"/>
+                        <line x1="180" y1="150" x2="180" y2="220" stroke="#000" stroke-width="1.2"/>
+                        <line x1="180" y1="220" x2="300" y2="220" stroke="#000" stroke-width="1.2"/>
+                        <line x1="60" y1="0" x2="60" y2="150" stroke="#000" stroke-width="1.2"/>
+                        <line x1="240" y1="60" x2="240" y2="400" stroke="#000" stroke-width="1.2"/>
+                        <line x1="120" y1="220" x2="120" y2="400" stroke="#000" stroke-width="1.2"/>
+                        <line x1="0" y1="310" x2="120" y2="310" stroke="#000" stroke-width="1.2"/>
+                        <line x1="0" y1="370" x2="240" y2="370" stroke="#000" stroke-width="1.2"/>
+                        <circle cx="60" cy="60" r="4" fill="none" stroke="#000" stroke-width="1.2"/>
+                        <circle cx="60" cy="60" r="1.8" fill="#000"/>
+                        <circle cx="180" cy="150" r="4" fill="none" stroke="#000" stroke-width="1.2"/>
+                        <circle cx="180" cy="150" r="1.8" fill="#000"/>
+                        <circle cx="180" cy="220" r="4" fill="none" stroke="#000" stroke-width="1.2"/>
+                        <circle cx="180" cy="220" r="1.8" fill="#000"/>
+                        <circle cx="240" cy="60" r="4" fill="none" stroke="#000" stroke-width="1.2"/>
+                        <circle cx="240" cy="60" r="1.8" fill="#000"/>
+                        <circle cx="120" cy="310" r="4" fill="none" stroke="#000" stroke-width="1.2"/>
+                        <circle cx="120" cy="310" r="1.8" fill="#000"/>
+                        <rect x="52" y="144" width="14" height="8" fill="none" stroke="#000" stroke-width="0.9"/>
+                        <rect x="172" y="302" width="14" height="8" fill="none" stroke="#000" stroke-width="0.9"/>
+                        <rect x="232" y="362" width="14" height="8" fill="none" stroke="#000" stroke-width="0.9"/>
+                    </svg>
+                </div>
+                <span class="cppad tl"></span><span class="cppad tr"></span>
+                <span class="cppad bl"></span><span class="cppad br"></span>
+
+                <div class="contact-panel-inner">
+                    <a href="/cdn-cgi/l/email-protection#e88b8089869d83899b89868d9b80dcdea88f85898184c68b8785" class="contact-row">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="contact-row-text">
+                            <span class="contact-row-label">Email</span>
+                            <span class="contact-row-value"><span class="__cf_email__" data-cfemail="75161d141b001e1406141b10061d4143351218141c195b161a18">[email&#160;protected]</span></span>
+                        </div>
+                    </a>
+                    <a href="https://www.linkedin.com/in/chanukajayasooriya/" target="_blank" class="contact-row">
+                        <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
+                        <div class="contact-row-text">
+                            <span class="contact-row-label">LinkedIn</span>
+                            <span class="contact-row-value">Connect with me</span>
+                        </div>
+                    </a>
+                    <a href="https://www.facebook.com/chanukashanesh46" target="_blank" class="contact-row">
+                        <div class="contact-icon"><i class="fab fa-facebook-f"></i></div>
+                        <div class="contact-row-text">
+                            <span class="contact-row-label">Facebook</span>
+                            <span class="contact-row-value">@chanukashanesh46</span>
+                        </div>
+                    </a>
+                    <a href="https://wa.me/94769973354" target="_blank" class="contact-row">
+                        <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+                        <div class="contact-row-text">
+                            <span class="contact-row-label">WhatsApp</span>
+                            <span class="contact-row-value">+94 76 997 3354</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- RIGHT: Location + map -->
+            <div class="contact-panel" data-sr style="transition-delay:0.12s">
+                <div class="contact-circuit">
+                    <svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="0" y1="40" x2="90" y2="40" stroke="#000" stroke-width="1.2"/>
+                        <line x1="90" y1="40" x2="90" y2="110" stroke="#000" stroke-width="1.2"/>
+                        <line x1="90" y1="110" x2="300" y2="110" stroke="#000" stroke-width="1.2"/>
+                        <line x1="200" y1="0" x2="200" y2="110" stroke="#000" stroke-width="1.2"/>
+                        <line x1="0" y1="260" x2="300" y2="260" stroke="#000" stroke-width="1.2"/>
+                        <line x1="150" y1="110" x2="150" y2="400" stroke="#000" stroke-width="1.2"/>
+                        <line x1="0" y1="340" x2="150" y2="340" stroke="#000" stroke-width="1.2"/>
+                        <line x1="260" y1="260" x2="260" y2="400" stroke="#000" stroke-width="1.2"/>
+                        <circle cx="90" cy="40" r="4" fill="none" stroke="#000" stroke-width="1.2"/>
+                        <circle cx="90" cy="40" r="1.8" fill="#000"/>
+                        <circle cx="90" cy="110" r="4" fill="none" stroke="#000" stroke-width="1.2"/>
+                        <circle cx="90" cy="110" r="1.8" fill="#000"/>
+                        <circle cx="200" cy="110" r="4" fill="none" stroke="#000" stroke-width="1.2"/>
+                        <circle cx="200" cy="110" r="1.8" fill="#000"/>
+                        <circle cx="150" cy="260" r="4" fill="none" stroke="#000" stroke-width="1.2"/>
+                        <circle cx="150" cy="260" r="1.8" fill="#000"/>
+                        <circle cx="260" cy="260" r="4" fill="none" stroke="#000" stroke-width="1.2"/>
+                        <circle cx="260" cy="260" r="1.8" fill="#000"/>
+                        <rect x="82" y="103" width="14" height="8" fill="none" stroke="#000" stroke-width="0.9"/>
+                        <rect x="142" y="253" width="14" height="8" fill="none" stroke="#000" stroke-width="0.9"/>
+                    </svg>
+                </div>
+                <span class="cppad tl"></span><span class="cppad tr"></span>
+                <span class="cppad bl"></span><span class="cppad br"></span>
+
+                <div class="contact-panel-inner">
+                    <div class="contact-location-tag">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="contact-row-text">
+                            <span class="contact-row-label">Based in</span>
+                            <span class="contact-row-value">Colombo, Sri Lanka</span>
+                        </div>
+                    </div>
+                    <div class="contact-map">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126743.62!2d79.8612!3d6.9271!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae253d10f7a7003%3A0x320b2e4d32d3838d!2sColombo%2C%20Sri%20Lanka!5e0!3m2!1sen!2slk!4v1"
+                            allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /contact-layout -->
+
+        <!-- Form below -->
+        <div class="contact-form-wrap" data-sr>
+            <form action="https://formspree.io/f/mqedpzbz" method="POST">
+                <div class="input-box">
+                    <input type="text"   name="name"    placeholder="Full Name" required>
+                    <input type="email"  name="email"   placeholder="Email Address" required>
+                </div>
+                <div class="input-box">
+                    <input type="number" name="mobile"  placeholder="Mobile Number">
+                    <input type="text"   name="subject" placeholder="Email Subject">
+                </div>
+                <input type="hidden" name="_subject" value="New submission from Portfolio!">
+                <textarea name="message" placeholder="Your Message" required></textarea>
+                <input type="submit" value="Send Message">
+            </form>
+        </div>
+
+    </section>
+
+    <!-- ══ FOOTER ══ -->
+    <footer class="premium-footer">
+        <div class="footer-cta">
+            <h2>Have an Idea?</h2>
+            <a href="/cdn-cgi/l/email-protection#610209000f140a0012000f041209555721060c00080d4f020e0c" class="footer-btn">Let's Build It <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="footer-content">
+            <div class="footer-column brand-col">
+                <h3>Chanuka<span>.</span></h3>
+                <p>Engineering the future with precision and code.</p>
+                <div class="footer-socials">
+                    <a href="https://github.com/Cha-nuka-dev" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/chanukajayasooriya/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.youtube.com/@Formula1SL" target="_blank"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Portfolio</h4>
+                <a href="#hero">Home</a>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+            </div>
+
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="year"></span> Chanuka Sanesh. Made with <i class="fas fa-heart"></i> in Sri Lanka.</p>
+            <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div>
+        </div>
+    </footer>
+
+
+    <!-- Typed JS -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <!-- Main Script (optional external) -->
+    <script src="script.js"></script>
+
+    <!-- ── INLINE FALLBACK: scroll reveal + year ── 
+         Runs even if script.js is missing                -->
+    <script>
+    (function () {
+        /* Year */
+        var yr = document.getElementById('year');
+        if (yr) yr.textContent = new Date().getFullYear();
+
+        /* Scroll Reveal — IntersectionObserver with low threshold */
+        function initSR() {
+            var els = document.querySelectorAll('[data-sr]');
+            if (!els.length) return;
+
+            /* Instant fallback: if IO not supported just show everything */
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el){ el.classList.add('visible'); });
+                return;
+            }
+
+            var obs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
+
+            els.forEach(function(el){ obs.observe(el); });
+        }
+
+        /* Hard fallback: after 3 s reveal everything regardless */
+        var fallbackTimer = setTimeout(function(){
+            document.querySelectorAll('[data-sr]').forEach(function(el){
+                el.classList.add('visible');
+            });
+        }, 3000);
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function(){
+                initSR();
+                clearTimeout(fallbackTimer);
+                /* reset the hard fallback after init */
+                fallbackTimer = setTimeout(function(){
+                    document.querySelectorAll('[data-sr]').forEach(function(el){
+                        el.classList.add('visible');
+                    });
+                }, 3000);
+            });
+        } else {
+            initSR();
+        }
+    })();
+    </script>
+
+    <!-- ══ PROJECT CAROUSEL JS ══ -->
+    <script>
+    (function () {
+        const track    = document.getElementById('proj-track');
+        const prevBtn  = document.getElementById('proj-prev');
+        const nextBtn  = document.getElementById('proj-next');
+        const dotsWrap = document.getElementById('proj-dots');
+        if (!track) return;
+
+        const cards      = Array.from(track.children);
+        const totalCards = cards.length;
+        let current      = 0;
+
+        function visibleCount() {
+            if (window.innerWidth <= 540) return 1;
+            if (window.innerWidth <= 900) return 2;
+            return 4;
+        }
+
+        function getCardWidth() {
+            return cards[0].offsetWidth + 20; /* 20 = gap */
+        }
+
+        function maxIndex() {
+            return Math.max(0, totalCards - visibleCount());
+        }
+
+        /* Dots = one per card position (up to maxIndex+1) */
+        function buildDots() {
+            dotsWrap.innerHTML = '';
+            const total = maxIndex() + 1;
+            for (let i = 0; i < total; i++) {
+                const d = document.createElement('div');
+                d.className = 'carousel-dot' + (i === current ? ' active' : '');
+                d.addEventListener('click', () => goTo(i));
+                dotsWrap.appendChild(d);
+            }
+        }
+
+        function updateDots() {
+            dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => {
+                d.classList.toggle('active', i === current);
+            });
+        }
+
+        function goTo(index) {
+            current = Math.max(0, Math.min(index, maxIndex()));
+            track.style.transform = `translateX(-${current * getCardWidth()}px)`;
+            prevBtn.classList.toggle('disabled', current === 0);
+            nextBtn.classList.toggle('disabled', current >= maxIndex());
+            updateDots();
+        }
+
+        /* Move 1 card at a time */
+        prevBtn.addEventListener('click', () => goTo(current - 1));
+        nextBtn.addEventListener('click', () => goTo(current + 1));
+
+        /* Touch / swipe */
+        let startX = 0;
+        track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+        track.addEventListener('touchend', e => {
+            const diff = startX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+        });
+
+        /* Init */
+        buildDots();
+        goTo(0);
+        window.addEventListener('resize', () => { buildDots(); goTo(0); });
+    })();
+    </script>
+
+    <!-- ══ BACK TO TOP ══ -->
+    <a href="#hero" class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <svg viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+            <circle class="track"    cx="27" cy="27" r="24"/>
+            <circle class="progress" cx="27" cy="27" r="24" id="btt-ring"/>
+        </svg>
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+    (function () {
+        const btn  = document.getElementById('back-to-top');
+        const ring = document.getElementById('btt-ring');
+        if (!btn || !ring) return;
+
+        const r   = 24;
+        const cir = 2 * Math.PI * r;
+        ring.style.strokeDasharray  = cir;
+        ring.style.strokeDashoffset = cir;
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const total    = document.body.scrollHeight - window.innerHeight;
+            const progress = scrolled / total;
+
+            /* Show/hide */
+            btn.classList.toggle('visible', scrolled > 300);
+
+            /* Update ring */
+            ring.style.strokeDashoffset = cir - progress * cir;
+        });
+    })();
+    </script>
+
+
+    <!-- ══ CIRCUIT TORCH CANVAS ══ -->
+    <canvas id="circuit-canvas"></canvas>
+
+    <script>
+    (function () {
+        const canvas = document.getElementById('circuit-canvas');
+        const ctx    = canvas.getContext('2d');
+
+        let W, H;
+        let mouseX = -999, mouseY = -999;
+        const RADIUS   = 160;   /* torch spotlight radius */
+        const SEGMENTS = 280;   /* number of circuit trace segments */
+
+        /* ── Generate circuit path network ── */
+        let nodes = [], edges = [];
+
+        function generateCircuit() {
+            nodes = [];
+            edges = [];
+
+            const cols = Math.ceil(W / 90) + 2;
+            const rows = Math.ceil(H / 90) + 2;
+
+            /* Grid nodes with jitter */
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    nodes.push({
+                        x: c * 90 - 10 + (Math.random() - 0.5) * 30,
+                        y: r * 90 - 10 + (Math.random() - 0.5) * 30,
+                    });
+                }
+            }
+
+            /* Connect nearby nodes with L-shaped traces */
+            const cols2 = cols;
+            for (let i = 0; i < nodes.length; i++) {
+                const n = nodes[i];
+                /* right neighbour */
+                if (i % cols2 < cols2 - 1) addEdge(n, nodes[i + 1]);
+                /* bottom neighbour */
+                if (i + cols2 < nodes.length) addEdge(n, nodes[i + cols2]);
+                /* diagonal (skip some for sparsity) */
+                if (Math.random() < 0.18 && i + cols2 + 1 < nodes.length) {
+                    addEdge(n, nodes[i + cols2 + 1]);
+                }
+            }
+
+            /* Extra random long-range traces */
+            for (let k = 0; k < SEGMENTS; k++) {
+                const a = nodes[Math.floor(Math.random() * nodes.length)];
+                const b = nodes[Math.floor(Math.random() * nodes.length)];
+                if (a !== b) addEdge(a, b, true);
+            }
+        }
+
+        function addEdge(a, b, longRange) {
+            if (longRange) {
+                const dist = Math.hypot(b.x - a.x, b.y - a.y);
+                if (dist > 260) return;   /* skip very long */
+            }
+            edges.push({ a, b });
+        }
+
+        function resize() {
+            W = canvas.width  = window.innerWidth;
+            H = canvas.height = window.innerHeight;
+            generateCircuit();
+        }
+
+        /* ── Draw ── */
+        function draw() {
+            ctx.clearRect(0, 0, W, H);
+
+            /* --- Draw full circuit onto off-screen buffer --- */
+            /* We'll use a clipping trick: draw circuit in accent color,
+               then mask with radial gradient around mouse */
+
+            /* 1. Save state, set clip to spotlight circle */
+            ctx.save();
+
+            /* Radial gradient mask — feathered edge */
+            const grd = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, RADIUS);
+            grd.addColorStop(0,    'rgba(0,0,0,1)');
+            grd.addColorStop(0.6,  'rgba(0,0,0,0.85)');
+            grd.addColorStop(0.88, 'rgba(0,0,0,0.2)');
+            grd.addColorStop(1,    'rgba(0,0,0,0)');
+
+            /* Draw edges */
+            edges.forEach(({ a, b }) => {
+                /* L-shaped path: go horizontal then vertical */
+                const mx = b.x; /* elbow point */
+                const my = a.y;
+
+                ctx.beginPath();
+                ctx.moveTo(a.x, a.y);
+                ctx.lineTo(mx,  my);
+                ctx.lineTo(b.x, b.y);
+
+                ctx.strokeStyle = 'rgba(60,120,80,0.55)';
+                ctx.lineWidth   = 0.9;
+                ctx.stroke();
+            });
+
+            /* Dots at nodes */
+            nodes.forEach(n => {
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, 2.2, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(60,130,80,0.5)';
+                ctx.fill();
+            });
+
+            /* Small via circles at random nodes */
+            nodes.forEach((n, i) => {
+                if (i % 7 === 0) {
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, 5, 0, Math.PI * 2);
+                    ctx.strokeStyle = 'rgba(60,130,80,0.45)';
+                    ctx.lineWidth = 1.2;
+                    ctx.stroke();
+                }
+            });
+
+            ctx.restore();
+
+            /* 2. Apply spotlight mask using destination-in on a second pass */
+            /* We need to use a temp canvas approach for proper masking */
+            ctx.globalCompositeOperation = 'destination-in';
+            ctx.fillStyle = grd;
+            ctx.fillRect(0, 0, W, H);
+            ctx.globalCompositeOperation = 'source-over';
+
+            requestAnimationFrame(draw);
+        }
+
+        /* ── Track mouse & touch ── */
+        window.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        window.addEventListener('touchmove', e => {
+            mouseX = e.touches[0].clientX;
+            mouseY = e.touches[0].clientY;
+        }, { passive: true });
+
+        /* Hide when mouse leaves window */
+        document.addEventListener('mouseleave', () => {
+            mouseX = -999; mouseY = -999;
+        });
+
+        resize();
+        draw();
+        window.addEventListener('resize', resize);
+    })();
+    </script>
+
+
+    <!-- ══ CIRCUIT SPOTLIGHT ══ -->
+    <canvas id="circuit-canvas" style="
+        position:fixed; inset:0; width:100%; height:100%;
+        z-index:9997; pointer-events:none;
+    "></canvas>
+    <script>
+    (function(){
+        const canvas = document.getElementById('circuit-canvas');
+        const ctx    = canvas.getContext('2d');
+
+        const SPOT_R = 55;
+        const INK    = '42,38,30';
+
+        let W, H, segs, pads;
+        let mx = -9999, my = -9999, active = false, hideTimer;
+
+        /* Selectors for all content that should BLOCK the effect */
+        const BLOCK_SEL = [
+            '.bento-card', '.proj-card', '.about-img', '.about-content',
+            '.achievement-row', 'form', '.navbara', '.navbar',
+            '.hero-content', '.hero-action-bar', '.back-to-top',
+            '.footer-content', '.footer-cta', '.footer-bottom',
+            'h2', 'h3', 'h4', 'p'
+        ].join(',');
+
+        function build(){
+            W = canvas.width  = window.innerWidth;
+            H = canvas.height = window.innerHeight;
+            segs = []; pads = [];
+
+            const count = Math.floor((W * H) / 2800);
+            const pts = Array.from({length: count}, () => ({
+                x: Math.random() * W,
+                y: Math.random() * H,
+            }));
+
+            pts.forEach(p => {
+                const n = 1 + Math.floor(Math.random() * 3);
+                for(let i = 0; i < n; i++){
+                    const ang = (Math.random() < 0.5 ? 0 : Math.PI/2)
+                                + (Math.random() < 0.3 ? Math.PI : 0);
+                    const len = 18 + Math.random() * 50;
+                    const ex  = p.x + Math.cos(ang) * len;
+                    const ey  = p.y + Math.sin(ang) * len;
+                    segs.push({ x1:p.x, y1:p.y, x2:ex, y2:ey });
+
+                    /* occasional elbow */
+                    if(Math.random() < 0.4){
+                        const ang2 = ang + (Math.random()<0.5?1:-1)*Math.PI/2;
+                        const len2 = 12 + Math.random() * 35;
+                        segs.push({
+                            x1:ex, y1:ey,
+                            x2:ex + Math.cos(ang2)*len2,
+                            y2:ey + Math.sin(ang2)*len2,
+                        });
+                    }
+                }
+                const t = Math.random();
+                pads.push({ x:p.x, y:p.y,
+                    type: t < 0.11 ? 'via' : t < 0.25 ? 'pad' : 'dot' });
+            });
+        }
+
+        function spotAlpha(d){
+            if(d >= SPOT_R) return 0;
+            return Math.pow(1 - (d/SPOT_R), 2.2);
+        }
+
+        function segAlpha(x1,y1,x2,y2){
+            const dx=x2-x1, dy=y2-y1, lenSq=dx*dx+dy*dy;
+            if(lenSq===0) return spotAlpha(Math.hypot(x1-mx,y1-my));
+            let t=((mx-x1)*dx+(my-y1)*dy)/lenSq;
+            t=Math.max(0,Math.min(1,t));
+            return spotAlpha(Math.hypot(x1+t*dx-mx, y1+t*dy-my));
+        }
+
+        function draw(){
+            ctx.clearRect(0,0,W,H);
+            if(!active){ requestAnimationFrame(draw); return; }
+
+            const margin = SPOT_R + 50;
+
+            /* Draw traces */
+            segs.forEach(s => {
+                const midX=(s.x1+s.x2)/2, midY=(s.y1+s.y2)/2;
+                if(Math.abs(midX-mx)>margin && Math.abs(s.x1-mx)>margin) return;
+                const a = segAlpha(s.x1,s.y1,s.x2,s.y2);
+                if(a<=0.01) return;
+
+                ctx.save();
+                ctx.globalAlpha = a * 0.40;
+                ctx.strokeStyle = `rgb(${INK})`;
+                ctx.lineWidth   = 0.9;
+                ctx.lineCap     = 'round';
+                ctx.lineJoin    = 'round';
+                ctx.beginPath();
+                ctx.moveTo(s.x1, s.y1);
+                ctx.lineTo(s.x2, s.y2);
+                ctx.stroke();
+                ctx.restore();
+            });
+
+            /* Draw pads */
+            pads.forEach(p => {
+                const d=Math.hypot(p.x-mx,p.y-my);
+                const a=spotAlpha(d);
+                if(a<=0.01) return;
+                ctx.save();
+                ctx.globalAlpha = a * 0.50;
+                if(p.type==='via'){
+                    ctx.strokeStyle=`rgb(${INK})`; ctx.lineWidth=1;
+                    ctx.beginPath(); ctx.arc(p.x,p.y,4,0,Math.PI*2); ctx.stroke();
+                    ctx.fillStyle=`rgba(${INK},0.3)`;
+                    ctx.beginPath(); ctx.arc(p.x,p.y,1.8,0,Math.PI*2); ctx.fill();
+                } else if(p.type==='pad'){
+                    ctx.strokeStyle=`rgb(${INK})`; ctx.lineWidth=0.8;
+                    ctx.fillStyle=`rgba(${INK},0.08)`;
+                    ctx.beginPath(); ctx.roundRect(p.x-4.5,p.y-2.8,9,5.5,1.5);
+                    ctx.fill(); ctx.stroke();
+                } else {
+                    ctx.fillStyle=`rgba(${INK},0.38)`;
+                    ctx.beginPath(); ctx.arc(p.x,p.y,1.5,0,Math.PI*2); ctx.fill();
+                }
+                ctx.restore();
+            });
+
+            /* ── ERASE over all content elements ── */
+            try {
+                document.querySelectorAll(BLOCK_SEL).forEach(el => {
+                    const r = el.getBoundingClientRect();
+                    /* small padding so erase slightly outside element edge */
+                    const pad = 6;
+                    ctx.clearRect(
+                        r.left - pad, r.top - pad,
+                        r.width + pad*2, r.height + pad*2
+                    );
+                });
+            } catch(e){}
+
+            requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('mousemove', e => {
+            mx=e.clientX; my=e.clientY; active=true;
+            clearTimeout(hideTimer);
+            hideTimer=setTimeout(()=>{ active=false; },1600);
+        },{ passive:true });
+        window.addEventListener('mouseleave',()=>{ active=false; });
+
+        build();
+        draw();
+        window.addEventListener('resize', build);
+    })();
+    </script>
+
+    <script>
+    /* ══ HEADER SCROLL BEHAVIOUR ══ */
+    (function(){
+        const header = document.querySelector('.header');
+        if(!header) return;
+        let lastY = window.scrollY, ticking = false;
+
+        function update(){
+            const y = window.scrollY;
+            const diff = y - lastY;
+
+            /* Compact pills when scrolled past 60px */
+            header.classList.toggle('scrolled', y > 60);
+
+            /* Hide on scroll DOWN > 4px, show on scroll UP */
+            if(y > 100){
+                if(diff > 4)       header.classList.add('hide');
+                else if(diff < -4) header.classList.remove('hide');
+            } else {
+                header.classList.remove('hide');
+            }
+
+            lastY = y;
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if(!ticking){
+                requestAnimationFrame(update);
+                ticking = true;
+            }
+        }, { passive: true });
+    })();
+    </script>
+
+</body>
+</html>
