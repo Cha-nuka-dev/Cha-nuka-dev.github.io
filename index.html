@@ -120,7 +120,7 @@
     ══════════════════════════════════════════ */
     .hero {
         position: relative; width: 100%; height: 100vh; min-height: 600px;
-        overflow: hidden; display: flex; align-items: flex-end; justify-content: flex-end;
+        overflow: hidden; display: flex; align-items: center; justify-content: flex-end;
     }
     /* ── CSS Morphing Blob Background ── */
     .hero-bg {
@@ -226,7 +226,7 @@
     .hero-content {
         position: relative; z-index: 2;
         display: flex; flex-direction: column; align-items: flex-end; text-align: right;
-        padding: 0 60px 130px 0; max-width: 56%;
+        padding: 140px 60px 80px 0; max-width: 56%;
         animation: fadeSlideIn 1.2s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0;
     }
     @keyframes fadeSlideIn {
@@ -927,11 +927,12 @@
         .menu-icon .nav-pill { padding: 10px 14px; cursor: pointer; }
         .hero-content {
             max-width: 100%;
-            padding: 0 18px 130px 18px;
+            padding: 100px 18px 160px 18px;
             align-items: center;
             text-align: center;
         }
         .hero-content h1 { font-size: clamp(2.2rem, 10vw, 3rem); }
+        .hero { align-items: flex-end; justify-content: center; }
         .hero-subtitle { font-size: 0.78rem; }
         .hero-badges { align-items: center; }
         .hero-badge {
@@ -1448,33 +1449,16 @@
                     </div>
                     <div class="ach-title">Winners of the GridX: Sri Lanka's 1st STEM Motorsport Event</div>
                     <p class="ach-desc">Winner of the Vanguard Racing Team at the inaugural GridX STEM Motorsport Challenge. Made history showcasing precision engineering, rapid prototyping, and teamwork on the track against top undergraduate teams.</p>
-                    <a href="https://itum.mrt.ac.lk/node/1327" target="_blank" class="ach-btn">
-                        <!--<i class="fab fa-linkedin-in"></i>--> View ITUM blog Post
-                    </a><br>
-                    <div class="ach-footer">
-                        <div class="ach-logos" style="flex-wrap:nowrap; gap:14px;">
-                    
-                            <!-- CDN icon logo -->
+                    <div class="ach-footer" style="display:flex; align-items:center; justify-content:space-between; margin-top:20px; padding-top:16px; border-top:1px solid rgba(0,0,0,0.06); flex-wrap:nowrap; gap:14px;">
+                        <a href="https://itum.mrt.ac.lk/node/1327" target="_blank" class="ach-btn" style="flex-shrink:0;">
+                            View ITUM Blog Post
+                        </a>
+                        <div class="ach-logos" style="display:flex; flex-wrap:nowrap; align-items:center; gap:14px;">
                             <div class="ach-logo" style="flex-shrink:0;">
-                                <img src="/img/itum.svg" alt="itum" width="70">
-                                <!--<span>ITUM</span>-->
+                                <img src="/img/itum.svg" alt="ITUM" width="60" style="height:36px; object-fit:contain;">
                             </div>
                         </div>
                     </div>
-                    
-                            <!-- Inline SVG logo (paste your base64/svg here) 
-                            <div class="ach-logo">
-                                <img src="data:image/svg+xml;..." alt="Your Tool">
-                                <span>Label</span>
-                            </div> -->
-                    
-                            <!-- Local image logo
-                            <div class="ach-logo">
-                                <img src="uom.png" alt="UoM" style="mix-blend-mode:multiply;">
-                                <span>UoM</span>
-                            </div> -->
-                    
-                        
                 </div>
             </div>
 
@@ -1492,21 +1476,16 @@
                     <p class="ach-desc">Organized by the Institution of Incorporated Engineers, Sri Lanka,
                         our journey to revolutionize weed management through autonomous mapping and multi-spectral sensing reaches 
                         the final stage. </p>
-                    <a href="#" target="_blank" class="ach-btn">
-                        <i class="fab fa-linkedin-in"></i> View LinkedIn Post
-                    
-                     </a><br>
-                    <div class="ach-footer">
-                        <div class="ach-logos" style="flex-wrap:nowrap; gap:14px;">
-                    
-                            <!-- CDN icon logo -->
+                    <div class="ach-footer" style="display:flex; align-items:center; justify-content:space-between; margin-top:20px; padding-top:16px; border-top:1px solid rgba(0,0,0,0.06); flex-wrap:nowrap; gap:14px;">
+                        <a href="#" target="_blank" class="ach-btn" style="flex-shrink:0;">
+                            <i class="fab fa-linkedin-in"></i> View LinkedIn Post
+                        </a>
+                        <div class="ach-logos" style="display:flex; flex-wrap:nowrap; align-items:center; gap:14px;">
                             <div class="ach-logo" style="flex-shrink:0;">
-                                <img src="/img/itum.svg" alt="itum" width="70">
-                                <span></span>
+                                <img src="/img/itum.svg" alt="ITUM" width="60" style="height:36px; object-fit:contain;">
                             </div>
                             <div class="ach-logo" style="flex-shrink:0;">
-                                <img src="/img/iiesl.png" alt="IIESL" width="40">
-                                <span></span>
+                                <img src="/img/iiesl.png" alt="IIESL" width="36" style="height:36px; object-fit:contain;">
                             </div>
                         </div>
                     </div>
@@ -1556,11 +1535,11 @@
                 <span class="cppad bl"></span><span class="cppad br"></span>
 
                 <div class="contact-panel-inner">
-                    <a href="mailto:chanukasanesh46@gmail.com" class="contact-row">
+                    <a href="/cdn-cgi/l/email-protection#aecdc6cfc0dbc5cfddcfc0cbddc69a98eec9c3cfc7c280cdc1c3" class="contact-row">
                         <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                         <div class="contact-row-text">
                             <span class="contact-row-label">Email</span>
-                            <span class="contact-row-value">chanukasanesh46@gmail.com</span>
+                            <span class="contact-row-value"><span class="__cf_email__" data-cfemail="76151e1718031d1705171813051e424036111b171f1a5815191b">[email&#160;protected]</span></span>
                         </div>
                     </a>
                     <a href="https://www.linkedin.com/in/chanukajayasooriya/" target="_blank" class="contact-row">
@@ -1659,7 +1638,7 @@
     <footer class="premium-footer">
         <div class="footer-cta">
             <h2>Have an Idea?</h2>
-            <a href="mailto:23et0394@itum.mrt.ac.lk" class="footer-btn">Let's Build It <i class="fas fa-arrow-right"></i></a>
+            <a href="/cdn-cgi/l/email-protection#2c1e1f49581c1f15186c4558594102415e58024d4f024047" class="footer-btn">Let's Build It <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="footer-content">
             <div class="footer-column brand-col">
@@ -1688,7 +1667,7 @@
 
 
     <!-- Typed JS -->
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
     <!-- Main Script (optional external) -->
     <script src="script.js"></script>
 
@@ -2177,10 +2156,8 @@
             const y = window.scrollY;
             const diff = y - lastY;
 
-            /* Compact pills when scrolled past 60px */
             header.classList.toggle('scrolled', y > 60);
 
-            /* Hide on scroll DOWN > 4px, show on scroll UP */
             if(y > 100){
                 if(diff > 4)       header.classList.add('hide');
                 else if(diff < -4) header.classList.remove('hide');
